@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-RPH Portal SK Long Sait</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body class="bg-slate-100 font-sans min-h-screen p-3 md:p-6">
+
+    <div class="max-w-4xl mx-auto">
+        <!-- HEADER KORPORAT & LOGO SEKOLAH -->
+        <div class="bg-blue-900 text-white rounded-2xl p-6 shadow-xl mb-6 border-b-4 border-amber-400 text-center md:text-left flex flex-col md:flex-row items-center justify-between gap-4">
+            <div class="flex items-center space-x-4">
+                <!-- LOGO SEKOLAH (Boleh gantikan src ini dengan link URL gambar logo sekolah anda) -->
+                <div class="w-20 h-20 bg-white rounded-full p-2 flex items-center justify-center shadow-inner border-2 border-amber-400 shrink-0">
+                    <img src="https://cdn-icons-png.flaticon.com/512/2991/2991323.png" alt="Logo Sekolah" class="w-16 h-16 object-contain">
+                </div>
+                <div>
+                    <h1 class="text-2xl md:text-3xl font-black tracking-wide text-amber-300 uppercase">SK LONG SAIT</h1>
+                    <p class="text-blue-100 text-sm font-medium">Sistem Portal E-RPH Guru & Pentaksiran Harian</p>
+                </div>
+            </div>
+            <div class="text-xs bg-blue-950 px-3 py-2 rounded-lg border border-blue-700 text-blue-200">
+                <p><i class="fa-solid fa-clock text-amber-400 mr-1"></i> Status Sesi: <span id="currentDateDisplay">Loading...</span></p>
+            </div>
+        </div>
+
+        <!-- TAB NAVIGATION -->
+        <div class="flex justify-center space-x-3 mb-6">
+            <button id="tabTeacherBtn" onclick="switchTab('teacher')" class="px-6 py-2.5 rounded-xl font-bold bg-blue-800 text-white shadow-md hover:bg-blue-900 transition"><i class="fa-solid fa-cloud-arrow-up mr-2"></i>Borang Guru</button>
+            <button id="tabAdminBtn" onclick="switchTab('admin')" class="px-6 py-2.5 rounded-xl font-bold bg-white text-gray-700 hover:bg-gray-100 shadow-sm transition"><i class="fa-solid fa-user-check mr-2"></i>Panel Pentadbir</button>
+        </div>
+
+        <!-- BORANG GURU -->
+        <div id="teacherView" class="bg-white shadow-xl rounded-2xl p-6 md:p-8 border border-gray-200">
+            <div class="border-b pb-4 mb-6 flex justify-between items-center">
+                <div>
+                    <h2 class="text-2xl font-bold text-gray-800">Muat Naik RPH Guru</h2>
+                    <p class="text-sm text-gray-500">Pilih nama anda dan kemukakan fail RPH mengikut minggu</p>
+                </div>
+            </div>
+
+            <form id="erphForm" class="space-y-6">
+                <!-- PEMILIHAN NAMA GURU -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label class="block text-sm font-bold text-gray-700 mb-2"><i class="fa-solid fa-user text-blue-800 mr-1"></i> Nama Guru</label>
+                        <select id="teacherName" required class="w-full px-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-blue-600 focus:outline-none bg-white font-medium">
+                            <option value="">-- Pilih Nama Guru --</option>
+                            <option value="Cikgu Ahmad">Cikgu Ahmad</option>
+                            <option value="Cikgu Siti">Cikgu Siti</option>
+                            <option value="Cikgu Rahman">Cikgu Rahman</option>
+                            <option value="Cikgu Nurul">Cikgu Nurul</option>
+                            <option value="Cikgu SK Long Sait">Cikgu SK Long Sait</option>
+                        </select>
+                    </div>
+
+                    <!-- MINGGU RPH -->
+                    <div>
+                        <label class="block text-sm font-bold text-gray-700 mb-2"><i class="fa-solid fa-calendar-week text-blue-800 mr-1"></i> Minggu Persekolahan</label>
+                        <select id="week" required onchange="checkDeadline()" class="w-full px-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-blue-600 focus:outline-none bg-white font-medium">
+                            <option value="">-- Pilih Minggu --</option>
+                            <script>
+                                for(let i=1; i<=42; i++) {
+                                    document.write(`<option value="Minggu ${i}">Minggu ${i}</option>`);
+                                }
+                            </script>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <!-- SUBJEK & KELAS -->
+                    <div>
+                        <label class="block text-sm font-bold text-gray-700 mb-2"><i class="fa-solid fa-book text-blue-800 mr-1"></i> Subjek Utama</label>
+                        <select id="subject" required class="w-full px-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-blue-600 focus:outline-none bg-white">
+                            <option value="">-- Pilih Subjek --</option>
+                            <option value="Bahasa Melayu">Bahasa Melayu</option>
+                            <option value="English">English</option>
+                            <option value="Matematik">Matematik</option>
+                            <option value="Sains">Sains</option>
+                            <option value="Reka Bentuk & Teknologi (RBT)">Reka Bentuk & Teknologi (RBT)</option>
+                            <option value="Sejarah">Sejarah</option>
+                            <option value="Pendidikan Islam">Pendidikan Islam</option>
+                            <option value="Pendidikan Moral">Pendidikan Moral</option>
+                            <option value="Pendidikan Seni Visual (PSV)">Pendidikan Seni Visual (PSV)</option>
+                            <option value="Pendidikan Jasmani & Kesihatan">Pendidikan Jasmani & Kesihatan</option>
+                            <option value="Pendidikan Muzik">Pendidikan Muzik</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-bold text-gray-700 mb-2"><i class="fa-solid fa-school text-blue-800 mr-1"></i> Kelas / Tahun</label>
+                        <select id="className" required class="w-full px-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-blue-600 focus:outline-none bg-white">
+                            <option value="">-- Pilih Kelas --</option>
+                            <option value="Prasekolah">Prasekolah</option>
+                            <option value="Tahun 1">Tahun 1</option>
+                            <option value="Tahun 2">Tahun 2</option>
+                            <option value="Tahun 3">Tahun 3</option>
+                            <option value="Tahun 4">Tahun 4</option>
+                            <option value="Tahun 5">Tahun 5</option>
+                            <option value="Tahun 6">Tahun 6</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- MUAT NAIK BERBILANG FAIL (MULTIPLE FILES) -->
+                <div id="fileUploadContainer" class="p-5 bg-blue-50 rounded-xl border-2 border-dashed border-blue-300 transition-all">
+                    <label class="block text-sm font-bold text-gray-800 mb-2"><i class="fa-solid fa-paperclip text-blue-800 mr-1"></i> Lampirkan Fail RPH (Boleh pilih lebih daripada 1 fail)</label>
+                    <input type="file" id="fileInput" multiple class="w-full text-sm text-gray-600 file:mr-4 file:py-2.5 file:px-4 file:rounded-xl file:border-0 file:text-sm file:font-bold file:bg-blue-800 file:text-white hover:file:bg-blue-900 cursor-pointer">
+                    <p class="text-xs text-gray-500 mt-2"><i class="fa-solid fa-circle-info mr-1"></i> Format disokong: PDF, Word, PNG/JPG. Anda boleh menekan 'Ctrl' atau 'Shift' untuk memilih beberapa fail sekaligus.</p>
+                </div>
+
+                <!-- AMARAN PENGHANTARAN LEWAT (DYNAMIC MERAH) -->
+                <div id="lateWarningBanner" class="hidden p-4 bg-red-100 border-l-4 border-red-600 rounded-lg text-red-800 text-sm font-semibold">
+                    <i class="fa-solid fa-triangle-exclamation text-red-600 mr-2 text-lg"></i>
+                    <span>Penghantaran ini telah **LEWAT** daripada tarikh/masa yang ditetapkan. Status penghantaran akan ditanda sebagai "LEWAT".</span>
+                </div>
+
+                <button type="submit" id="submitBtn" class="w-full bg-blue-800 hover:bg-blue-900 text-white font-bold py-3.5 px-4 rounded-xl transition duration-200 shadow-lg text-lg flex items-center justify-center">
+                    <i class="fa-solid fa-paper-plane mr-2"></i> Hantar RPH Sekarang
+                </button>
+            </form>
+        </div>
+
+        <!-- PANEL PENTADBIR / PENGETUA -->
+        <div id="adminView" class="hidden bg-white shadow-xl rounded-2xl p-6 md:p-8 border border-gray-200">
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 gap-4 border-b pb-4">
+                <div>
+                    <h2 class="text-2xl font-bold text-gray-800">Panel Semakan Pentadbir</h2>
+                    <p class="text-sm text-gray-500">Pantau masa penghantaran dan luluskan RPH Guru</p>
+                </div>
+                <button onclick="loadAdminData()" class="px-4 py-2 bg-blue-50 text-blue-800 font-bold rounded-xl hover:bg-blue-100 transition"><i class="fa-solid fa-rotate-right mr-1"></i> Muat Semula Data</button>
+            </div>
+
+            <div id="adminContent" class="overflow-x-auto">
+                <p class="text-gray-500 italic">Sila masukkan PIN untuk melihat data...</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL POPUP TICK HIJAU (SUCCESS NOTIFICATION) -->
+    <div id="successModal" class="fixed inset-0 bg-black/60 backdrop-blur-sm hidden items-center justify-center p-4 z-50">
+        <div class="bg-white rounded-3xl p-8 max-w-md w-full text-center shadow-2xl transform transition-all border-4 border-emerald-500">
+            <!-- GREEN TICK ICON ANIMATED -->
+            <div class="w-20 h-20 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto mb-4 text-4xl shadow-inner">
+                <i class="fa-solid fa-check-double animate-bounce"></i>
+            </div>
+            <h3 class="text-2xl font-black text-gray-800 mb-1">RPH BERHASIL DIHANTAR!</h3>
+            <p class="text-sm text-gray-500 mb-6">Rekod penghantaran anda telah disimpan ke pangkalan data sekolah.</p>
+
+            <div class="bg-gray-50 p-4 rounded-2xl text-left space-y-2 mb-6 text-sm border">
+                <div class="flex justify-between border-b pb-2">
+                    <span class="text-gray-500">Masa & Hari:</span>
+                    <span id="modalTime" class="font-bold text-gray-800"></span>
+                </div>
+                <div class="flex justify-between">
+                    <span class="text-gray-500">Status Penghantaran:</span>
+                    <span id="modalStatus" class="font-bold"></span>
+                </div>
+            </div>
+
+            <button onclick="closeModal()" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3 rounded-xl shadow-lg">
+                Tutup & Selesai
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // =========================================================================
+        // ⚠️ TAMPAL GOOGLE APPS SCRIPT WEB APP URL ANDA DI SINI
+        // =========================================================================
+        const scriptUrl = 'https://script.google.com/macros/s/AKfycbwXRP-8uAP3EnJLPgEuIAoYuKdqtCmOBMJmJ1NHKqWtuS3vES9Zl-B-U0PzasTPDCaHGQ/exec';
+        const ADMIN_PIN = "1234"; // PIN laluan Pentadbir
+
+        // Paparkan tarikh semasa
+        document.getElementById('currentDateDisplay').innerText = new Date().toLocaleDateString('ms-MY', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+
+        // Semak samada status lewat mengikut hari (Ahad lewat)
+        function checkDeadline() {
+            const now = new Date();
+            const warningBanner = document.getElementById('lateWarningBanner');
+            const uploadBox = document.getElementById('fileUploadContainer');
+
+            // Jika hari Ahad jam 11 malam ke atas atau Isnin
+            if (now.getDay() === 0 && now.getHours() >= 23) {
+                warningBanner.classList.remove('hidden');
+                uploadBox.className = "p-5 bg-red-50 rounded-xl border-2 border-dashed border-red-400";
+            } else {
+                warningBanner.classList.add('hidden');
+                uploadBox.className = "p-5 bg-blue-50 rounded-xl border-2 border-dashed border-blue-300";
+            }
+        }
+
+        // Tukar Tab
+        function switchTab(tab) {
+            const teacherView = document.getElementById('teacherView');
+            const adminView = document.getElementById('adminView');
+            const teacherBtn = document.getElementById('tabTeacherBtn');
+            const adminBtn = document.getElementById('tabAdminBtn');
+
+            if (tab === 'teacher') {
+                teacherView.classList.remove('hidden');
+                adminView.classList.add('hidden');
+                teacherBtn.className = "px-6 py-2.5 rounded-xl font-bold bg-blue-800 text-white shadow-md";
+                adminBtn.className = "px-6 py-2.5 rounded-xl font-bold bg-white text-gray-700 hover:bg-gray-100 shadow-sm";
+            } else {
+                const pin = prompt("Masukkan PIN Pentadbir:");
+                if (pin === ADMIN_PIN) {
+                    teacherView.classList.add('hidden');
+                    adminView.classList.remove('hidden');
+                    adminBtn.className = "px-6 py-2.5 rounded-xl font-bold bg-blue-800 text-white shadow-md";
+                    teacherBtn.className = "px-6 py-2.5 rounded-xl font-bold bg-white text-gray-700 hover:bg-gray-100 shadow-sm";
+                    loadAdminData();
+                } else if (pin !== null) {
+                    alert("PIN Salah!");
+                }
+            }
+        }
+
+        // Hantar Borang dengan sokongan Berbilang Fail
+        document.getElementById('erphForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const submitBtn = document.getElementById('submitBtn');
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-2"></i> Sedang Memuat Naik...';
+
+            const teacherName = document.getElementById('teacherName').value;
+            const week = document.getElementById('week').value;
+            const subject = document.getElementById('subject').value;
+            const className = document.getElementById('className').value;
+
+            const fileInput = document.getElementById('fileInput');
+            const files = fileInput.files;
+
+            let submissions = [];
+
+            if (files.length > 0) {
+                for (let i = 0; i < files.length; i++) {
+                    const file = files[i];
+                    const base64 = await toBase64(file);
+                    submissions.push({
+                        teacherName, week, subject, className,
+                        fileName: file.name,
+                        fileType: file.type,
+                        fileData: base64.split(',')[1]
+                    });
+                }
+            } else {
+                submissions.push({ teacherName, week, subject, className });
+            }
+
+            fetch(scriptUrl, {
+                method: 'POST',
+                mode: 'no-cors',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ submissions: submissions })
+            })
+            .then(() => {
+                const nowStr = new Date().toLocaleString('ms-MY');
+                document.getElementById('modalTime').innerText = nowStr;
+                document.getElementById('modalStatus').innerHTML = '<span class="text-emerald-600 font-bold">✔ Tepat Masa / Diterima</span>';
+                document.getElementById('successModal').classList.remove('hidden');
+                document.getElementById('successModal').classList.add('flex');
+                
+                document.getElementById('erphForm').reset();
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = '<i class="fa-solid fa-paper-plane mr-2"></i> Hantar RPH Sekarang';
+            })
+            .catch(err => {
+                alert('Ralat semasa menghantar. Sila semak pautan Web App.');
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = '<i class="fa-solid fa-paper-plane mr-2"></i> Hantar RPH Sekarang';
+            });
+        });
+
+        const toBase64 = file => new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = () => resolve(reader.result);
+            reader.onerror = error => reject(error);
+        });
+
+        function closeModal() {
+            document.getElementById('successModal').classList.add('hidden');
+            document.getElementById('successModal').classList.remove('flex');
+        }
+
+        // Muat Data Panel Pengetua
+        function loadAdminData() {
+            const adminContent = document.getElementById('adminContent');
+            adminContent.innerHTML = '<p class="text-blue-800 font-bold animate-pulse"><i class="fa-solid fa-spinner fa-spin mr-2"></i> Memuat turun rekod dari Google Sheets...</p>';
+
+            fetch(scriptUrl)
+                .then(res => res.json())
+                .then(data => {
+                    if (data.length === 0) {
+                        adminContent.innerHTML = '<p class="text-gray-500">Tiada rekod penghantaran ditemui.</p>';
+                        return;
+                    }
+
+                    let html = `<table class="w-full text-left border-collapse min-w-[750px]">
+                        <thead>
+                            <tr class="bg-gray-100 text-gray-700 text-xs uppercase font-bold border-b">
+                                <th class="p-3">Hari & Masa Muat Naik</th>
+                                <th class="p-3">Guru & Minggu</th>
+                                <th class="p-3">Subjek & Kelas</th>
+                                <th class="p-3">Fail RPH</th>
+                                <th class="p-3">Status Masa</th>
+                                <th class="p-3">Kelulusan</th>
+                                <th class="p-3">Tindakan</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y text-sm">`;
+
+                    data.reverse().forEach(item => {
+                        const lateTag = item.isLate 
+                            ? '<span class="px-2.5 py-1 bg-red-100 text-red-700 rounded-full text-xs font-black border border-red-300">LEWAT</span>'
+                            : '<span class="px-2.5 py-1 bg-emerald-100 text-emerald-700 rounded-full text-xs font-black border border-emerald-300">TEPAT MASA</span>';
+
+                        const appTag = item.approvalStatus === 'Approved'
+                            ? '<span class="text-emerald-600 font-bold"><i class="fa-solid fa-circle-check"></i> Diluluskan</span>'
+                            : item.approvalStatus === 'Rejected'
+                            ? '<span class="text-red-600 font-bold"><i class="fa-solid fa-circle-xmark"></i> Ditolak</span>'
+                            : '<span class="text-amber-600 font-bold"><i class="fa-solid fa-clock"></i> Belum Semak</span>';
+
+                        const fileBtn = item.fileUrl 
+                            ? `<a href="${item.fileUrl}" target="_blank" class="px-3 py-1 bg-blue-800 text-white rounded-lg text-xs font-bold hover:bg-blue-900"><i class="fa-solid fa-file-pdf mr-1"></i> Buka Fail</a>`
+                            : `<span class="text-gray-400 text-xs">Tiada Fail</span>`;
+
+                        const rowBg = item.isLate ? 'bg-red-50/50' : 'bg-white';
+
+                        html += `<tr class="${rowBg}">
+                            <td class="p-3 text-xs font-semibold text-gray-700"><i class="fa-solid fa-clock text-blue-800 mr-1"></i> ${item.dateTimeStr || 'N/A'}</td>
+                            <td class="p-3 font-bold text-gray-800">${item.teacherName}<br><span class="text-xs font-normal text-blue-700">${item.week}</span></td>
+                            <td class="p-3 text-xs"><b>${item.subject}</b><br>${item.className}</td>
+                            <td class="p-3">${fileBtn}</td>
+                            <td class="p-3">${lateTag}</td>
+                            <td class="p-3 text-xs">${appTag}</td>
+                            <td class="p-3 space-x-1">
+                                <button onclick="updateStatus(${item.rowIndex}, 'Approved')" class="px-2.5 py-1 bg-emerald-600 text-white rounded-lg text-xs font-bold hover:bg-emerald-700">Lulus</button>
+                                <button onclick="updateStatus(${item.rowIndex}, 'Rejected')" class="px-2.5 py-1 bg-red-600 text-white rounded-lg text-xs font-bold hover:bg-red-700">Tolak</button>
+                            </td>
+                        </tr>`;
+                    });
+
+                    html += '</tbody></table>';
+                    adminContent.innerHTML = html;
+                })
+                .catch(err => {
+                    adminContent.innerHTML = '<p class="text-red-500">Ralat memuat turun data.</p>';
+                });
+        }
+
+        function updateStatus(rowIndex, newStatus) {
+            fetch(scriptUrl, {
+                method: 'POST',
+                mode: 'no-cors',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ action: "updateStatus", rowIndex: rowIndex, status: newStatus })
+            })
+            .then(() => {
+                alert(`Status dikemaskini kepada ${newStatus}`);
+                loadAdminData();
+            });
+        }
+    </script>
+</body>
+</html>
