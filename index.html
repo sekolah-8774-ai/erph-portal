@@ -8,15 +8,15 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 </head>
-<body class="bg-slate-100 font-sans min-h-screen p-3 md:p-6">
+<body class="bg-slate-100 font-sans min-h-screen p-3 md:p-6" onload="checkDeadline()">
 
     <div class="max-w-4xl mx-auto">
         <!-- HEADER KORPORAT & LOGO SEKOLAH -->
         <div class="bg-blue-900 text-white rounded-2xl p-6 shadow-xl mb-6 border-b-4 border-amber-400 text-center md:text-left flex flex-col md:flex-row items-center justify-between gap-4">
             <div class="flex items-center space-x-4">
-                <!-- LOGO SEKOLAH (Boleh gantikan src ini dengan link URL gambar logo sekolah anda) -->
+                <!-- LOGO SEKOLAH (Memanggil fail logo.png dari repository GitHub anda) -->
                 <div class="w-20 h-20 bg-white rounded-full p-2 flex items-center justify-center shadow-inner border-2 border-amber-400 shrink-0">
-                    <img src="logo.png.png" alt="Logo Sekolah" class="w-16 h-16 object-contain">
+                    <img src="logo.png" alt="Logo SK Long Sait" class="w-16 h-16 object-contain" onerror="this.src='https://cdn-icons-png.flaticon.com/512/2991/2991323.png'">
                 </div>
                 <div>
                     <h1 class="text-2xl md:text-3xl font-black tracking-wide text-amber-300 uppercase">SK LONG SAIT</h1>
@@ -24,7 +24,8 @@
                 </div>
             </div>
             <div class="text-xs bg-blue-950 px-3 py-2 rounded-lg border border-blue-700 text-blue-200">
-                <p><i class="fa-solid fa-clock text-amber-400 mr-1"></i> Status Sesi: <span id="currentDateDisplay">Loading...</span></p>
+                <p><i class="fa-solid fa-clock text-amber-400 mr-1"></i> Tarikh Semasa: <span id="currentDateDisplay">Loading...</span></p>
+                <p class="text-amber-300 mt-1 font-semibold"><i class="fa-solid fa-calendar-check mr-1"></i> Tarikh Akhir: Isnin (11:59 Malam)</p>
             </div>
         </div>
 
@@ -36,32 +37,41 @@
 
         <!-- BORANG GURU -->
         <div id="teacherView" class="bg-white shadow-xl rounded-2xl p-6 md:p-8 border border-gray-200">
-            <div class="border-b pb-4 mb-6 flex justify-between items-center">
-                <div>
-                    <h2 class="text-2xl font-bold text-gray-800">Muat Naik RPH Guru</h2>
-                    <p class="text-sm text-gray-500">Pilih nama anda dan kemukakan fail RPH mengikut minggu</p>
-                </div>
+            <div class="border-b pb-4 mb-6">
+                <h2 class="text-2xl font-bold text-gray-800">Muat Naik RPH Guru</h2>
+                <p class="text-sm text-gray-500">Pilih nama anda, subjek, dan kemukakan fail RPH mengikut minggu</p>
             </div>
 
             <form id="erphForm" class="space-y-6">
-                <!-- PEMILIHAN NAMA GURU -->
+                
+                <!-- 1. SENARAI NAMA GURU -->
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
                         <label class="block text-sm font-bold text-gray-700 mb-2"><i class="fa-solid fa-user text-blue-800 mr-1"></i> Nama Guru</label>
                         <select id="teacherName" required class="w-full px-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-blue-600 focus:outline-none bg-white font-medium">
                             <option value="">-- Pilih Nama Guru --</option>
-                            <option value="Cikgu Ahmad">Cikgu Ahmad</option>
-                            <option value="Cikgu Siti">Cikgu Siti</option>
-                            <option value="Cikgu Rahman">Cikgu Rahman</option>
-                            <option value="Cikgu Nurul">Cikgu Nurul</option>
-                            <option value="Cikgu SK Long Sait">Cikgu SK Long Sait</option>
+                            <!-- 💡 Sila gantikan atau tambah nama guru rasmi SK Long Sait di sini -->
+                            <option value="YOLLANI JAFFERI">YOLLANI JAFFERI</option>
+                            <option value="KEVINSON GANGGA ANAK GAPU">KEVINSON GANGGA ANAK GAPU</option>
+                            <option value="MUHAMMAD AIZEL BIN BOLHASAN">MUHAMMAD AIZEL BIN BOLHASAN</option>
+                            <option value="TIMOTIUS KEBING BONIFACE">TIMOTIUS KEBING BONIFACE</option>
+                            <option value="EVA UDING PADAN">EVA UDING PADAN</option>
+                            <option value="PATRICK ANN BILONG">PATRICK ANN BILONG</option>
+                            <option value="CLARISSA ROLAND">CLARISSA ROLAND</option>
+                            <option value="NAZIERAH GANI">NAZIERAH GANI</option>
+                            <option value="PATRICIA LUT">PATRICIA LUT</option>
+                            <option value="FLORENTINA MARIE AREN">FLORENTINA MARIE AREN</option>
+                             <option value="ZIANA JANE STEPHEN">ZIANA JANE STEPHEN</option>
+                             <option value="AGNES YAPP YI ZHEN">AGNES YAPP YI ZHEN</option>
+                             <option value="WATSON KULIH ANAK BLALANG">WATSON KULIH ANAK BLALANG</option>
+                             <option value="ANGELICA">ANGELICA</option>
                         </select>
                     </div>
 
                     <!-- MINGGU RPH -->
                     <div>
                         <label class="block text-sm font-bold text-gray-700 mb-2"><i class="fa-solid fa-calendar-week text-blue-800 mr-1"></i> Minggu Persekolahan</label>
-                        <select id="week" required onchange="checkDeadline()" class="w-full px-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-blue-600 focus:outline-none bg-white font-medium">
+                        <select id="week" required class="w-full px-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-blue-600 focus:outline-none bg-white font-medium">
                             <option value="">-- Pilih Minggu --</option>
                             <script>
                                 for(let i=1; i<=42; i++) {
@@ -72,52 +82,90 @@
                     </div>
                 </div>
 
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <!-- SUBJEK & KELAS -->
-                    <div>
-                        <label class="block text-sm font-bold text-gray-700 mb-2"><i class="fa-solid fa-book text-blue-800 mr-1"></i> Subjek Utama</label>
-                        <select id="subject" required class="w-full px-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-blue-600 focus:outline-none bg-white">
-                            <option value="">-- Pilih Subjek --</option>
-                            <option value="Bahasa Melayu">Bahasa Melayu</option>
-                            <option value="English">English</option>
-                            <option value="Matematik">Matematik</option>
-                            <option value="Sains">Sains</option>
-                            <option value="Reka Bentuk & Teknologi (RBT)">Reka Bentuk & Teknologi (RBT)</option>
-                            <option value="Sejarah">Sejarah</option>
-                            <option value="Pendidikan Islam">Pendidikan Islam</option>
-                            <option value="Pendidikan Moral">Pendidikan Moral</option>
-                            <option value="Pendidikan Seni Visual (PSV)">Pendidikan Seni Visual (PSV)</option>
-                            <option value="Pendidikan Jasmani & Kesihatan">Pendidikan Jasmani & Kesihatan</option>
-                            <option value="Pendidikan Muzik">Pendidikan Muzik</option>
-                        </select>
-                    </div>
-
-                    <div>
-                        <label class="block text-sm font-bold text-gray-700 mb-2"><i class="fa-solid fa-school text-blue-800 mr-1"></i> Kelas / Tahun</label>
-                        <select id="className" required class="w-full px-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-blue-600 focus:outline-none bg-white">
-                            <option value="">-- Pilih Kelas --</option>
-                            <option value="Prasekolah">Prasekolah</option>
-                            <option value="Tahun 1">Tahun 1</option>
-                            <option value="Tahun 2">Tahun 2</option>
-                            <option value="Tahun 3">Tahun 3</option>
-                            <option value="Tahun 4">Tahun 4</option>
-                            <option value="Tahun 5">Tahun 5</option>
-                            <option value="Tahun 6">Tahun 6</option>
-                        </select>
+                <!-- 2. PILIHAN SUBJEK MULTIPLE CHOICE (CHECKBOXES) -->
+                <div>
+                    <label class="block text-sm font-bold text-gray-700 mb-2">
+                        <i class="fa-solid fa-book-open text-blue-800 mr-1"></i> Subjek Diajar (Boleh tandakan lebih daripada satu)
+                    </label>
+                    <div class="grid grid-cols-2 md:grid-cols-3 gap-3 bg-gray-50 p-4 rounded-xl border border-gray-200">
+                        <label class="flex items-center space-x-2 text-sm text-gray-700 cursor-pointer hover:text-blue-800">
+                            <input type="checkbox" name="subjectCheck" value="Bahasa Melayu" class="w-4 h-4 text-blue-800 rounded focus:ring-blue-500">
+                            <span>Bahasa Melayu</span>
+                        </label>
+                        <label class="flex items-center space-x-2 text-sm text-gray-700 cursor-pointer hover:text-blue-800">
+                            <input type="checkbox" name="subjectCheck" value="English" class="w-4 h-4 text-blue-800 rounded focus:ring-blue-500">
+                            <span>English</span>
+                        </label>
+                        <label class="flex items-center space-x-2 text-sm text-gray-700 cursor-pointer hover:text-blue-800">
+                            <input type="checkbox" name="subjectCheck" value="Matematik" class="w-4 h-4 text-blue-800 rounded focus:ring-blue-500">
+                            <span>Matematik</span>
+                        </label>
+                        <label class="flex items-center space-x-2 text-sm text-gray-700 cursor-pointer hover:text-blue-800">
+                            <input type="checkbox" name="subjectCheck" value="Sains" class="w-4 h-4 text-blue-800 rounded focus:ring-blue-500">
+                            <span>Sains</span>
+                        </label>
+                        <label class="flex items-center space-x-2 text-sm text-gray-700 cursor-pointer hover:text-blue-800">
+                            <input type="checkbox" name="subjectCheck" value="RBT" class="w-4 h-4 text-blue-800 rounded focus:ring-blue-500">
+                            <span>RBT</span>
+                        </label>
+                        <label class="flex items-center space-x-2 text-sm text-gray-700 cursor-pointer hover:text-blue-800">
+                            <input type="checkbox" name="subjectCheck" value="Sejarah" class="w-4 h-4 text-blue-800 rounded focus:ring-blue-500">
+                            <span>Sejarah</span>
+                        </label>
+                        <label class="flex items-center space-x-2 text-sm text-gray-700 cursor-pointer hover:text-blue-800">
+                            <input type="checkbox" name="subjectCheck" value="Pendidikan Islam" class="w-4 h-4 text-blue-800 rounded focus:ring-blue-500">
+                            <span>Pendidikan Islam</span>
+                        </label>
+                        <label class="flex items-center space-x-2 text-sm text-gray-700 cursor-pointer hover:text-blue-800">
+                            <input type="checkbox" name="subjectCheck" value="Pendidikan Moral" class="w-4 h-4 text-blue-800 rounded focus:ring-blue-500">
+                            <span>Pendidikan Moral</span>
+                        </label>
+                        <label class="flex items-center space-x-2 text-sm text-gray-700 cursor-pointer hover:text-blue-800">
+                            <input type="checkbox" name="subjectCheck" value="PSV" class="w-4 h-4 text-blue-800 rounded focus:ring-blue-500">
+                            <span>PSV</span>
+                        </label>
+                        <label class="flex items-center space-x-2 text-sm text-gray-700 cursor-pointer hover:text-blue-800">
+                            <input type="checkbox" name="subjectCheck" value="PJK" class="w-4 h-4 text-blue-800 rounded focus:ring-blue-500">
+                            <span>PJK</span>
+                        </label>
+                        <label class="flex items-center space-x-2 text-sm text-gray-700 cursor-pointer hover:text-blue-800">
+                            <input type="checkbox" name="subjectCheck" value="Muzik" class="w-4 h-4 text-blue-800 rounded focus:ring-blue-500">
+                            <span>Muzik</span>
+                        </label>
+                        <label class="flex items-center space-x-2 text-sm text-gray-700 cursor-pointer hover:text-blue-800">
+                            <input type="checkbox" name="subjectCheck" value="Prasekolah" class="w-4 h-4 text-blue-800 rounded focus:ring-blue-500">
+                            <span>Prasekolah</span>
+                        </label>
                     </div>
                 </div>
 
-                <!-- MUAT NAIK BERBILANG FAIL (MULTIPLE FILES) -->
-                <div id="fileUploadContainer" class="p-5 bg-blue-50 rounded-xl border-2 border-dashed border-blue-300 transition-all">
+                <!-- KELAS -->
+                <div>
+                    <label class="block text-sm font-bold text-gray-700 mb-2"><i class="fa-solid fa-school text-blue-800 mr-1"></i> Kelas / Tahun</label>
+                    <select id="className" required class="w-full px-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-blue-600 focus:outline-none bg-white">
+                        <option value="">-- Pilih Kelas --</option>
+                        <option value="Prasekolah">Prasekolah</option>
+                        <option value="Tahun 1">Tahun 1</option>
+                        <option value="Tahun 2">Tahun 2</option>
+                        <option value="Tahun 3">Tahun 3</option>
+                        <option value="Tahun 4">Tahun 4</option>
+                        <option value="Tahun 5">Tahun 5</option>
+                        <option value="Tahun 6">Tahun 6</option>
+                        <option value="Semua Kelas">Semua Kelas</option>
+                    </select>
+                </div>
+
+                <!-- MUAT NAIK BERBILANG FAIL -->
+                <div id="fileUploadContainer" class="p-5 rounded-xl border-2 border-dashed transition-all">
                     <label class="block text-sm font-bold text-gray-800 mb-2"><i class="fa-solid fa-paperclip text-blue-800 mr-1"></i> Lampirkan Fail RPH (Boleh pilih lebih daripada 1 fail)</label>
                     <input type="file" id="fileInput" multiple class="w-full text-sm text-gray-600 file:mr-4 file:py-2.5 file:px-4 file:rounded-xl file:border-0 file:text-sm file:font-bold file:bg-blue-800 file:text-white hover:file:bg-blue-900 cursor-pointer">
-                    <p class="text-xs text-gray-500 mt-2"><i class="fa-solid fa-circle-info mr-1"></i> Format disokong: PDF, Word, PNG/JPG. Anda boleh menekan 'Ctrl' atau 'Shift' untuk memilih beberapa fail sekaligus.</p>
+                    <p class="text-xs text-gray-500 mt-2"><i class="fa-solid fa-circle-info mr-1"></i> Tekan 'Ctrl' atau 'Shift' di keyboard untuk memilih beberapa fail RPH serentak.</p>
                 </div>
 
-                <!-- AMARAN PENGHANTARAN LEWAT (DYNAMIC MERAH) -->
+                <!-- BANNER AMARAN ISNIN / LEWAT (MERAH AUTOMATIK) -->
                 <div id="lateWarningBanner" class="hidden p-4 bg-red-100 border-l-4 border-red-600 rounded-lg text-red-800 text-sm font-semibold">
                     <i class="fa-solid fa-triangle-exclamation text-red-600 mr-2 text-lg"></i>
-                    <span>Penghantaran ini telah **LEWAT** daripada tarikh/masa yang ditetapkan. Status penghantaran akan ditanda sebagai "LEWAT".</span>
+                    <span>AMARAN: Hari penghantaran RPH telah melepasi tarikh akhir (Hari Isnin). Status penghantaran ini akan direkodkan sebagai <b class="underline">LEWAT</b>.</span>
                 </div>
 
                 <button type="submit" id="submitBtn" class="w-full bg-blue-800 hover:bg-blue-900 text-white font-bold py-3.5 px-4 rounded-xl transition duration-200 shadow-lg text-lg flex items-center justify-center">
@@ -142,10 +190,9 @@
         </div>
     </div>
 
-    <!-- MODAL POPUP TICK HIJAU (SUCCESS NOTIFICATION) -->
+    <!-- MODAL POPUP TICK HIJAU -->
     <div id="successModal" class="fixed inset-0 bg-black/60 backdrop-blur-sm hidden items-center justify-center p-4 z-50">
         <div class="bg-white rounded-3xl p-8 max-w-md w-full text-center shadow-2xl transform transition-all border-4 border-emerald-500">
-            <!-- GREEN TICK ICON ANIMATED -->
             <div class="w-20 h-20 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto mb-4 text-4xl shadow-inner">
                 <i class="fa-solid fa-check-double animate-bounce"></i>
             </div>
@@ -173,29 +220,37 @@
         // =========================================================================
         // ⚠️ TAMPAL GOOGLE APPS SCRIPT WEB APP URL ANDA DI SINI
         // =========================================================================
-        const scriptUrl = 'https://script.google.com/macros/s/AKfycbwXRP-8uAP3EnJLPgEuIAoYuKdqtCmOBMJmJ1NHKqWtuS3vES9Zl-B-U0PzasTPDCaHGQ/exec';
-        const ADMIN_PIN = "1234"; // PIN laluan Pentadbir
+        const scriptUrl = 'https://script.google.com/macros/s/AKfycbxdfdAOqT2O_tA_7sLd7joLVCaiQXF2XxpltXUpFTlfeE316Xu2_TXyOQaAdxq54OARSQ/exec';
+        const ADMIN_PIN = "4301"; 
 
-        // Paparkan tarikh semasa
         document.getElementById('currentDateDisplay').innerText = new Date().toLocaleDateString('ms-MY', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
 
-        // Semak samada status lewat mengikut hari (Ahad lewat)
+        // SEMAKAN DEADLINE AUTOMATIK HARI ISNIN
         function checkDeadline() {
             const now = new Date();
+            const currentDay = now.getDay(); // 0 = Ahad, 1 = Isnin, 2 = Selasa, 3 = Rabu, ...
             const warningBanner = document.getElementById('lateWarningBanner');
             const uploadBox = document.getElementById('fileUploadContainer');
 
-            // Jika hari Ahad jam 11 malam ke atas atau Isnin
-            if (now.getDay() === 0 && now.getHours() >= 23) {
+            let isLate = false;
+
+            // Hari Selasa (2) hingga Sabtu (6) -> LEWAT
+            if (currentDay > 1) {
+                isLate = true;
+            } else if (currentDay === 1 && now.getHours() >= 23) { // Isnin selepas jam 11 malam
+                isLate = true;
+            }
+            // Hari Ahad (0) & Isnin sebelum 11 malam -> TEPAT MASA
+
+            if (isLate) {
                 warningBanner.classList.remove('hidden');
-                uploadBox.className = "p-5 bg-red-50 rounded-xl border-2 border-dashed border-red-400";
+                uploadBox.className = "p-5 rounded-xl border-2 border-dashed bg-red-50 border-red-400";
             } else {
                 warningBanner.classList.add('hidden');
-                uploadBox.className = "p-5 bg-blue-50 rounded-xl border-2 border-dashed border-blue-300";
+                uploadBox.className = "p-5 rounded-xl border-2 border-dashed bg-blue-50 border-blue-300";
             }
         }
 
-        // Tukar Tab
         function switchTab(tab) {
             const teacherView = document.getElementById('teacherView');
             const adminView = document.getElementById('adminView');
@@ -221,16 +276,26 @@
             }
         }
 
-        // Hantar Borang dengan sokongan Berbilang Fail
+        // HANTAR BORANG
         document.getElementById('erphForm').addEventListener('submit', async function(e) {
             e.preventDefault();
+
+            // AMBIL SUBJEK YANG DITANDA (MULTIPLE CHOICE)
+            const selectedSubjects = Array.from(document.querySelectorAll('input[name="subjectCheck"]:checked')).map(el => el.value);
+            
+            if (selectedSubjects.length === 0) {
+                alert("Sila pilih sekurang-kurangnya satu Subjek!");
+                return;
+            }
+
+            const subjectString = selectedSubjects.join(', ');
+
             const submitBtn = document.getElementById('submitBtn');
             submitBtn.disabled = true;
             submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-2"></i> Sedang Memuat Naik...';
 
             const teacherName = document.getElementById('teacherName').value;
             const week = document.getElementById('week').value;
-            const subject = document.getElementById('subject').value;
             const className = document.getElementById('className').value;
 
             const fileInput = document.getElementById('fileInput');
@@ -243,14 +308,14 @@
                     const file = files[i];
                     const base64 = await toBase64(file);
                     submissions.push({
-                        teacherName, week, subject, className,
+                        teacherName, week, subject: subjectString, className,
                         fileName: file.name,
                         fileType: file.type,
                         fileData: base64.split(',')[1]
                     });
                 }
             } else {
-                submissions.push({ teacherName, week, subject, className });
+                submissions.push({ teacherName, week, subject: subjectString, className });
             }
 
             fetch(scriptUrl, {
@@ -262,11 +327,21 @@
             .then(() => {
                 const nowStr = new Date().toLocaleString('ms-MY');
                 document.getElementById('modalTime').innerText = nowStr;
-                document.getElementById('modalStatus').innerHTML = '<span class="text-emerald-600 font-bold">✔ Tepat Masa / Diterima</span>';
+                
+                const now = new Date();
+                const isLate = (now.getDay() > 1 || (now.getDay() === 1 && now.getHours() >= 23));
+                
+                if (isLate) {
+                    document.getElementById('modalStatus').innerHTML = '<span class="text-red-600 font-bold"><i class="fa-solid fa-circle-exclamation"></i> LEWAT (Diterima)</span>';
+                } else {
+                    document.getElementById('modalStatus').innerHTML = '<span class="text-emerald-600 font-bold"><i class="fa-solid fa-circle-check"></i> TEPAT MASA</span>';
+                }
+
                 document.getElementById('successModal').classList.remove('hidden');
                 document.getElementById('successModal').classList.add('flex');
                 
                 document.getElementById('erphForm').reset();
+                checkDeadline();
                 submitBtn.disabled = false;
                 submitBtn.innerHTML = '<i class="fa-solid fa-paper-plane mr-2"></i> Hantar RPH Sekarang';
             })
@@ -289,7 +364,7 @@
             document.getElementById('successModal').classList.remove('flex');
         }
 
-        // Muat Data Panel Pengetua
+        // LOAD ADMIN DATA
         function loadAdminData() {
             const adminContent = document.getElementById('adminContent');
             adminContent.innerHTML = '<p class="text-blue-800 font-bold animate-pulse"><i class="fa-solid fa-spinner fa-spin mr-2"></i> Memuat turun rekod dari Google Sheets...</p>';
