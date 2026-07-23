@@ -10,7 +10,7 @@
 </head>
 <body class="bg-slate-100 font-sans min-h-screen p-3 md:p-6" onload="checkDeadline()">
 
-    <div class="max-w-4xl mx-auto">
+    <div class="max-w-5xl mx-auto">
         <!-- HEADER KORPORAT & LOGO SEKOLAH -->
         <div class="bg-blue-900 text-white rounded-2xl p-6 shadow-xl mb-6 border-b-4 border-amber-400 text-center md:text-left flex flex-col md:flex-row items-center justify-between gap-4">
             <div class="flex items-center space-x-4">
@@ -31,19 +31,19 @@
         <!-- TAB NAVIGATION -->
         <div class="flex justify-center space-x-3 mb-6">
             <button id="tabTeacherBtn" onclick="switchTab('teacher')" class="px-6 py-2.5 rounded-xl font-bold bg-blue-800 text-white shadow-md hover:bg-blue-900 transition"><i class="fa-solid fa-cloud-arrow-up mr-2"></i>Borang Guru</button>
-            <button id="tabAdminBtn" onclick="switchTab('admin')" class="px-6 py-2.5 rounded-xl font-bold bg-white text-gray-700 hover:bg-gray-100 shadow-sm transition"><i class="fa-solid fa-user-check mr-2"></i>Panel Pentadbir</button>
+            <button id="tabHeadmasterBtn" onclick="switchTab('headmaster')" class="px-6 py-2.5 rounded-xl font-bold bg-white text-gray-700 hover:bg-gray-100 shadow-sm transition"><i class="fa-solid fa-user-tie mr-2"></i>Panel Headmaster</button>
         </div>
 
         <!-- BORANG GURU -->
         <div id="teacherView" class="bg-white shadow-xl rounded-2xl p-6 md:p-8 border border-gray-200">
             <div class="border-b pb-4 mb-6">
                 <h2 class="text-2xl font-bold text-gray-800">Muat Naik RPH Guru</h2>
-                <p class="text-sm text-gray-500">Pilih nama anda, subjek, dan kemukakan fail RPH mengikut minggu</p>
+                <p class="text-sm text-gray-500">Pilih nama anda, subjek, kelas, dan kemukakan fail RPH mengikut minggu</p>
             </div>
 
             <form id="erphForm" class="space-y-6">
                 
-                <!-- 1. SENARAI NAMA GURU -->
+                <!-- 1. NAMA GURU & MINGGU -->
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
                         <label class="block text-sm font-bold text-gray-700 mb-2"><i class="fa-solid fa-user text-blue-800 mr-1"></i> Nama Guru</label>
@@ -80,7 +80,7 @@
                     </div>
                 </div>
 
-                <!-- 2. PILIHAN SUBJEK MULTIPLE CHOICE (CHECKBOXES) -->
+                <!-- 2. PILIHAN SUBJEK (CHECKBOXES BERBILANG) -->
                 <div>
                     <label class="block text-sm font-bold text-gray-700 mb-2">
                         <i class="fa-solid fa-book-open text-blue-800 mr-1"></i> Subjek Diajar (Boleh tandakan lebih daripada satu)
@@ -137,21 +137,45 @@
                     </div>
                 </div>
 
-                <!-- KELAS -->
+                <!-- 3. PILIHAN KELAS / TAHUN (CHECKBOXES BERBILANG) -->
                 <div>
-                    <label class="block text-sm font-bold text-gray-700 mb-2"><i class="fa-solid fa-school text-blue-800 mr-1"></i> Kelas / Tahun</label>
-                    <select id="className" required class="w-full px-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-blue-600 focus:outline-none bg-white">
-                        <option value="">-- Pilih Kelas --</option>
-                        <option value="Prasekolah">Prasekolah</option>
-                        <option value="Pemulihan">Pemulihan</option>
-                        <option value="Tahun 1">Tahun 1</option>
-                        <option value="Tahun 2">Tahun 2</option>
-                        <option value="Tahun 3">Tahun 3</option>
-                        <option value="Tahun 4">Tahun 4</option>
-                        <option value="Tahun 5">Tahun 5</option>
-                        <option value="Tahun 6">Tahun 6</option>
-                        <option value="Semua Kelas">Semua Kelas</option>
-                    </select>
+                    <label class="block text-sm font-bold text-gray-700 mb-2">
+                        <i class="fa-solid fa-school text-blue-800 mr-1"></i> Kelas / Tahun (Boleh tandakan lebih daripada satu)
+                    </label>
+                    <div class="grid grid-cols-2 md:grid-cols-3 gap-3 bg-gray-50 p-4 rounded-xl border border-gray-200">
+                        <label class="flex items-center space-x-2 text-sm text-gray-700 cursor-pointer hover:text-blue-800">
+                            <input type="checkbox" name="classCheck" value="Prasekolah" class="w-4 h-4 text-blue-800 rounded focus:ring-blue-500">
+                            <span>Prasekolah</span>
+                        </label>
+                        <label class="flex items-center space-x-2 text-sm text-gray-700 cursor-pointer hover:text-blue-800">
+                            <input type="checkbox" name="classCheck" value="Pemulihan" class="w-4 h-4 text-blue-800 rounded focus:ring-blue-500">
+                            <span>Pemulihan</span>
+                        </label>
+                        <label class="flex items-center space-x-2 text-sm text-gray-700 cursor-pointer hover:text-blue-800">
+                            <input type="checkbox" name="classCheck" value="Tahun 1" class="w-4 h-4 text-blue-800 rounded focus:ring-blue-500">
+                            <span>Tahun 1</span>
+                        </label>
+                        <label class="flex items-center space-x-2 text-sm text-gray-700 cursor-pointer hover:text-blue-800">
+                            <input type="checkbox" name="classCheck" value="Tahun 2" class="w-4 h-4 text-blue-800 rounded focus:ring-blue-500">
+                            <span>Tahun 2</span>
+                        </label>
+                        <label class="flex items-center space-x-2 text-sm text-gray-700 cursor-pointer hover:text-blue-800">
+                            <input type="checkbox" name="classCheck" value="Tahun 3" class="w-4 h-4 text-blue-800 rounded focus:ring-blue-500">
+                            <span>Tahun 3</span>
+                        </label>
+                        <label class="flex items-center space-x-2 text-sm text-gray-700 cursor-pointer hover:text-blue-800">
+                            <input type="checkbox" name="classCheck" value="Tahun 4" class="w-4 h-4 text-blue-800 rounded focus:ring-blue-500">
+                            <span>Tahun 4</span>
+                        </label>
+                        <label class="flex items-center space-x-2 text-sm text-gray-700 cursor-pointer hover:text-blue-800">
+                            <input type="checkbox" name="classCheck" value="Tahun 5" class="w-4 h-4 text-blue-800 rounded focus:ring-blue-500">
+                            <span>Tahun 5</span>
+                        </label>
+                        <label class="flex items-center space-x-2 text-sm text-gray-700 cursor-pointer hover:text-blue-800">
+                            <input type="checkbox" name="classCheck" value="Tahun 6" class="w-4 h-4 text-blue-800 rounded focus:ring-blue-500">
+                            <span>Tahun 6</span>
+                        </label>
+                    </div>
                 </div>
 
                 <!-- MUAT NAIK BERBILANG FAIL -->
@@ -173,17 +197,17 @@
             </form>
         </div>
 
-        <!-- PANEL PENTADBIR / PENGETUA -->
-        <div id="adminView" class="hidden bg-white shadow-xl rounded-2xl p-6 md:p-8 border border-gray-200">
+        <!-- PANEL HEADMASTER (GURU BESAR) -->
+        <div id="headmasterView" class="hidden bg-white shadow-xl rounded-2xl p-6 md:p-8 border border-gray-200">
             <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 gap-4 border-b pb-4">
                 <div>
-                    <h2 class="text-2xl font-bold text-gray-800">Panel Semakan Pentadbir</h2>
-                    <p class="text-sm text-gray-500">Pantau masa penghantaran dan luluskan RPH Guru</p>
+                    <h2 class="text-2xl font-bold text-gray-800"><i class="fa-solid fa-user-tie text-blue-800 mr-2"></i>Panel Semakan Headmaster</h2>
+                    <p class="text-sm text-gray-500">Pantau masa penghantaran, berikan ulasan / komen, dan luluskan RPH Guru</p>
                 </div>
-                <button onclick="loadAdminData()" class="px-4 py-2 bg-blue-50 text-blue-800 font-bold rounded-xl hover:bg-blue-100 transition"><i class="fa-solid fa-rotate-right mr-1"></i> Muat Semula Data</button>
+                <button onclick="loadHeadmasterData()" class="px-4 py-2 bg-blue-50 text-blue-800 font-bold rounded-xl hover:bg-blue-100 transition"><i class="fa-solid fa-rotate-right mr-1"></i> Muat Semula Data</button>
             </div>
 
-            <div id="adminContent" class="overflow-x-auto">
+            <div id="headmasterContent" class="overflow-x-auto">
                 <p class="text-gray-500 italic">Sila masukkan PIN untuk melihat data...</p>
             </div>
         </div>
@@ -217,25 +241,24 @@
 
     <script>
         // =========================================================================
-        // ⚠️ TAMPAL GOOGLE APPS SCRIPT WEB APP URL ANDA DI SINI
+        // ⚠️ PAUTAN WEB APP GOOGLE APPS SCRIPT ANDA
         // =========================================================================
         const scriptUrl = 'https://script.google.com/macros/s/AKfycbxdfdAOqT2O_tA_7sLd7joLVCaiQXF2XxpltXUpFTlfeE316Xu2_TXyOQaAdxq54OARSQ/exec';
-        const ADMIN_PIN = "4301"; 
+        const HEADMASTER_PIN = "4301"; 
 
         document.getElementById('currentDateDisplay').innerText = new Date().toLocaleDateString('ms-MY', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
 
-        // SEMAKAN DEADLINE AUTOMATIK HARI ISNIN
+        // SEMAKAN DEADLINE ISNIN
         function checkDeadline() {
             const now = new Date();
-            const currentDay = now.getDay(); // 0 = Ahad, 1 = Isnin, 2 = Selasa, ...
+            const currentDay = now.getDay();
             const warningBanner = document.getElementById('lateWarningBanner');
             const uploadBox = document.getElementById('fileUploadContainer');
 
             let isLate = false;
-
             if (currentDay > 1) {
                 isLate = true;
-            } else if (currentDay === 1 && now.getHours() >= 23) { // Isnin selepas jam 11 malam
+            } else if (currentDay === 1 && now.getHours() >= 23) {
                 isLate = true;
             }
 
@@ -250,23 +273,23 @@
 
         function switchTab(tab) {
             const teacherView = document.getElementById('teacherView');
-            const adminView = document.getElementById('adminView');
+            const headmasterView = document.getElementById('headmasterView');
             const teacherBtn = document.getElementById('tabTeacherBtn');
-            const adminBtn = document.getElementById('tabAdminBtn');
+            const headmasterBtn = document.getElementById('tabHeadmasterBtn');
 
             if (tab === 'teacher') {
                 teacherView.classList.remove('hidden');
-                adminView.classList.add('hidden');
+                headmasterView.classList.add('hidden');
                 teacherBtn.className = "px-6 py-2.5 rounded-xl font-bold bg-blue-800 text-white shadow-md";
-                adminBtn.className = "px-6 py-2.5 rounded-xl font-bold bg-white text-gray-700 hover:bg-gray-100 shadow-sm";
+                headmasterBtn.className = "px-6 py-2.5 rounded-xl font-bold bg-white text-gray-700 hover:bg-gray-100 shadow-sm";
             } else {
-                const pin = prompt("Masukkan PIN Pentadbir:");
-                if (pin === ADMIN_PIN) {
+                const pin = prompt("Masukkan PIN Headmaster:");
+                if (pin === HEADMASTER_PIN) {
                     teacherView.classList.add('hidden');
-                    adminView.classList.remove('hidden');
-                    adminBtn.className = "px-6 py-2.5 rounded-xl font-bold bg-blue-800 text-white shadow-md";
+                    headmasterView.classList.remove('hidden');
+                    headmasterBtn.className = "px-6 py-2.5 rounded-xl font-bold bg-blue-800 text-white shadow-md";
                     teacherBtn.className = "px-6 py-2.5 rounded-xl font-bold bg-white text-gray-700 hover:bg-gray-100 shadow-sm";
-                    loadAdminData();
+                    loadHeadmasterData();
                 } else if (pin !== null) {
                     alert("PIN Salah!");
                 }
@@ -277,14 +300,21 @@
         document.getElementById('erphForm').addEventListener('submit', async function(e) {
             e.preventDefault();
 
+            // AMBIL SUBJEK TERPILIH
             const selectedSubjects = Array.from(document.querySelectorAll('input[name="subjectCheck"]:checked')).map(el => el.value);
-            
             if (selectedSubjects.length === 0) {
                 alert("Sila pilih sekurang-kurangnya satu Subjek!");
                 return;
             }
-
             const subjectString = selectedSubjects.join(', ');
+
+            // AMBIL KELAS TERPILIH
+            const selectedClasses = Array.from(document.querySelectorAll('input[name="classCheck"]:checked')).map(el => el.value);
+            if (selectedClasses.length === 0) {
+                alert("Sila pilih sekurang-kurangnya satu Kelas!");
+                return;
+            }
+            const classString = selectedClasses.join(', ');
 
             const submitBtn = document.getElementById('submitBtn');
             submitBtn.disabled = true;
@@ -292,7 +322,6 @@
 
             const teacherName = document.getElementById('teacherName').value;
             const week = document.getElementById('week').value;
-            const className = document.getElementById('className').value;
 
             const fileInput = document.getElementById('fileInput');
             const files = fileInput.files;
@@ -304,14 +333,14 @@
                     const file = files[i];
                     const base64 = await toBase64(file);
                     submissions.push({
-                        teacherName, week, subject: subjectString, className,
+                        teacherName, week, subject: subjectString, className: classString,
                         fileName: file.name,
                         fileType: file.type,
                         fileData: base64.split(',')[1]
                     });
                 }
             } else {
-                submissions.push({ teacherName, week, subject: subjectString, className });
+                submissions.push({ teacherName, week, subject: subjectString, className: classString });
             }
 
             fetch(scriptUrl, {
@@ -360,28 +389,29 @@
             document.getElementById('successModal').classList.remove('flex');
         }
 
-        // MUAT TURUN DATA UNTUK PANEL PENTADBIR
-        function loadAdminData() {
-            const adminContent = document.getElementById('adminContent');
-            adminContent.innerHTML = '<p class="text-blue-800 font-bold animate-pulse"><i class="fa-solid fa-spinner fa-spin mr-2"></i> Memuat turun rekod dari Google Sheets...</p>';
+        // MUAT TURUN DATA UNTUK PANEL HEADMASTER
+        function loadHeadmasterData() {
+            const headmasterContent = document.getElementById('headmasterContent');
+            headmasterContent.innerHTML = '<p class="text-blue-800 font-bold animate-pulse"><i class="fa-solid fa-spinner fa-spin mr-2"></i> Memuat turun rekod dari Google Sheets...</p>';
 
             fetch(scriptUrl)
                 .then(res => res.json())
                 .then(data => {
                     if (!data || data.length === 0) {
-                        adminContent.innerHTML = '<p class="text-gray-500 py-4 text-center">Tiada rekod penghantaran ditemui.</p>';
+                        headmasterContent.innerHTML = '<p class="text-gray-500 py-4 text-center">Tiada rekod penghantaran ditemui.</p>';
                         return;
                     }
 
-                    let html = `<table class="w-full text-left border-collapse min-w-[750px]">
+                    let html = `<table class="w-full text-left border-collapse min-w-[900px]">
                         <thead>
                             <tr class="bg-gray-100 text-gray-700 text-xs uppercase font-bold border-b">
-                                <th class="p-3">Hari & Masa Muat Naik</th>
+                                <th class="p-3">Hari & Masa</th>
                                 <th class="p-3">Guru & Minggu</th>
                                 <th class="p-3">Subjek & Kelas</th>
                                 <th class="p-3">Fail RPH</th>
                                 <th class="p-3">Status Masa</th>
                                 <th class="p-3">Kelulusan</th>
+                                <th class="p-3">Komen / Ulasan Headmaster</th>
                                 <th class="p-3">Tindakan</th>
                             </tr>
                         </thead>
@@ -403,39 +433,76 @@
                             : `<span class="text-gray-400 text-xs">Tiada Fail</span>`;
 
                         const rowBg = item.isLate ? 'bg-red-50/50' : 'bg-white';
+                        const currentComment = item.comment || '';
 
                         html += `<tr class="${rowBg}">
                             <td class="p-3 text-xs font-semibold text-gray-700"><i class="fa-solid fa-clock text-blue-800 mr-1"></i> ${item.dateTimeStr || 'N/A'}</td>
                             <td class="p-3 font-bold text-gray-800">${item.teacherName}<br><span class="text-xs font-normal text-blue-700">${item.week}</span></td>
-                            <td class="p-3 text-xs"><b>${item.subject}</b><br>${item.className}</td>
+                            <td class="p-3 text-xs"><b>${item.subject}</b><br><span class="text-gray-600">${item.className}</span></td>
                             <td class="p-3">${fileBtn}</td>
                             <td class="p-3">${lateTag}</td>
                             <td class="p-3 text-xs">${appTag}</td>
-                            <td class="p-3 space-x-1">
-                                <button onclick="updateStatus(${item.rowIndex}, 'Approved')" class="px-2.5 py-1 bg-emerald-600 text-white rounded-lg text-xs font-bold hover:bg-emerald-700">Lulus</button>
-                                <button onclick="updateStatus(${item.rowIndex}, 'Rejected')" class="px-2.5 py-1 bg-red-600 text-white rounded-lg text-xs font-bold hover:bg-red-700">Tolak</button>
+                            <td class="p-3 min-w-[200px]">
+                                <textarea id="commentInput_${item.rowIndex}" rows="2" placeholder="Tulis ulasan Guru Besar di sini..." class="w-full text-xs p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-600 focus:outline-none resize-none">${currentComment}</textarea>
+                                <button onclick="saveCommentOnly(${item.rowIndex})" class="mt-1 px-2.5 py-1 bg-gray-700 hover:bg-gray-800 text-white rounded-md text-xs font-semibold transition flex items-center">
+                                    <i class="fa-solid fa-comment-dots mr-1"></i> Simpan Ulasan
+                                </button>
+                            </td>
+                            <td class="p-3 space-y-1">
+                                <button onclick="updateStatus(${item.rowIndex}, 'Approved')" class="w-full px-2.5 py-1 bg-emerald-600 text-white rounded-lg text-xs font-bold hover:bg-emerald-700 transition block text-center">Lulus</button>
+                                <button onclick="updateStatus(${item.rowIndex}, 'Rejected')" class="w-full px-2.5 py-1 bg-red-600 text-white rounded-lg text-xs font-bold hover:bg-red-700 transition block text-center">Tolak</button>
                             </td>
                         </tr>`;
                     });
 
                     html += '</tbody></table>';
-                    adminContent.innerHTML = html;
+                    headmasterContent.innerHTML = html;
                 })
                 .catch(err => {
-                    adminContent.innerHTML = '<p class="text-red-500 py-4">Ralat memuat turun data dari Google Sheets. Pastikan Web App telah dideploy sebagai "Anyone".</p>';
+                    headmasterContent.innerHTML = '<p class="text-red-500 py-4">Ralat memuat turun data dari Google Sheets. Pastikan Web App telah dideploy sebagai "Anyone".</p>';
                 });
         }
 
+        // FUNGSI UNTUK MENGEMASKINI STATUS BESERTA ULASAN
         function updateStatus(rowIndex, newStatus) {
+            const commentInput = document.getElementById(`commentInput_${rowIndex}`);
+            const commentVal = commentInput ? commentInput.value : '';
+
             fetch(scriptUrl, {
                 method: 'POST',
                 mode: 'no-cors',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ action: "updateStatus", rowIndex: rowIndex, status: newStatus })
+                body: JSON.stringify({ 
+                    action: "updateStatus", 
+                    rowIndex: rowIndex, 
+                    status: newStatus,
+                    comment: commentVal 
+                })
             })
             .then(() => {
-                alert(`Status telah dikemaskini kepada: ${newStatus}`);
-                loadAdminData();
+                alert(`Status dikemaskini kepada: ${newStatus}${commentVal ? ' beserta ulasan' : ''}`);
+                loadHeadmasterData();
+            });
+        }
+
+        // FUNGSI UNTUK MENYIMPAN KOMEN SAHAJA
+        function saveCommentOnly(rowIndex) {
+            const commentInput = document.getElementById(`commentInput_${rowIndex}`);
+            const commentVal = commentInput ? commentInput.value : '';
+
+            fetch(scriptUrl, {
+                method: 'POST',
+                mode: 'no-cors',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ 
+                    action: "updateComment", 
+                    rowIndex: rowIndex, 
+                    comment: commentVal 
+                })
+            })
+            .then(() => {
+                alert('Ulasan Headmaster berjaya disimpan!');
+                loadHeadmasterData();
             });
         }
     </script>
