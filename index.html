@@ -30,25 +30,182 @@
 
         <!-- TAB NAVIGATION -->
         <div class="flex justify-center space-x-3 mb-6">
-            <button id="tabTeacherBtn" onclick="switchTab('teacher')" class="px-6 py-2.5 rounded-xl font-bold bg-blue-800 text-white shadow-md hover:bg-blue-900 transition"><i class="fa-solid fa-cloud-arrow-up mr-2"></i>Borang Guru</button>
+            <button id="tabTeacherBtn" onclick="switchTab('teacher')" class="px-6 py-2.5 rounded-xl font-bold bg-blue-800 text-white shadow-md hover:bg-blue-900 transition"><i class="fa-solid fa-cloud-arrow-up mr-2"></i>Borang & Semakan Guru</button>
             <button id="tabHeadmasterBtn" onclick="switchTab('headmaster')" class="px-6 py-2.5 rounded-xl font-bold bg-white text-gray-700 hover:bg-gray-100 shadow-sm transition"><i class="fa-solid fa-user-tie mr-2"></i>Panel Headmaster</button>
         </div>
 
-        <!-- BORANG GURU -->
-        <div id="teacherView" class="bg-white shadow-xl rounded-2xl p-6 md:p-8 border border-gray-200">
-            <div class="border-b pb-4 mb-6">
-                <h2 class="text-2xl font-bold text-gray-800">Muat Naik RPH Guru</h2>
-                <p class="text-sm text-gray-500">Pilih nama anda, subjek, kelas, dan kemukakan fail RPH mengikut minggu</p>
+        <!-- BORANG GURU & SEMAKAN -->
+        <div id="teacherView" class="space-y-8">
+            <div class="bg-white shadow-xl rounded-2xl p-6 md:p-8 border border-gray-200">
+                <div class="border-b pb-4 mb-6">
+                    <h2 class="text-2xl font-bold text-gray-800">Muat Naik RPH Guru</h2>
+                    <p class="text-sm text-gray-500">Pilih nama anda, subjek, kelas, dan kemukakan fail RPH mengikut minggu</p>
+                </div>
+
+                <form id="erphForm" class="space-y-6">
+                    
+                    <!-- 1. NAMA GURU & MINGGU -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-sm font-bold text-gray-700 mb-2"><i class="fa-solid fa-user text-blue-800 mr-1"></i> Nama Guru</label>
+                            <select id="teacherName" required class="w-full px-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-blue-600 focus:outline-none bg-white font-medium">
+                                <option value="">-- Pilih Nama Guru --</option>
+                                <option value="YOLLANI JAFFERI">YOLLANI JAFFERI</option>
+                                <option value="KEVINSON GANGGA ANAK GAPU">KEVINSON GANGGA ANAK GAPU</option>
+                                <option value="MUHAMMAD AIZEL BIN BOLHASAN">MUHAMMAD AIZEL BIN BOLHASAN</option>
+                                <option value="TIMOTIUS KEBING BONIFACE">TIMOTIUS KEBING BONIFACE</option>
+                                <option value="EVA UDING PADAN">EVA UDING PADAN</option>
+                                <option value="PATRICK ANN BILONG">PATRICK ANN BILONG</option>
+                                <option value="CLARISSA ROLAND">CLARISSA ROLAND</option>
+                                <option value="PATRICIA LUT">PATRICIA LUT</option>
+                                <option value="ZIANA JANE STEPHEN">ZIANA JANE STEPHEN</option>
+                                <option value="AGNES YAPP YI ZHEN">AGNES YAPP YI ZHEN</option>
+                                <option value="WATSON KULIH ANAK BLALANG">WATSON KULIH ANAK BLALANG</option>
+                                <option value="TRACY RAYMOND">TRACY RAYMOND</option>
+                            </select>
+                        </div>
+
+                        <!-- MINGGU RPH -->
+                        <div>
+                            <label class="block text-sm font-bold text-gray-700 mb-2"><i class="fa-solid fa-calendar-week text-blue-800 mr-1"></i> Minggu Persekolahan</label>
+                            <select id="week" required class="w-full px-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-blue-600 focus:outline-none bg-white font-medium">
+                                <option value="">-- Pilih Minggu --</option>
+                                <script>
+                                    for(let i=1; i<=42; i++) {
+                                        document.write(`<option value="Minggu ${i}">Minggu ${i}</option>`);
+                                    }
+                                </script>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- 2. PILIHAN SUBJEK (CHECKBOXES BERBILANG) -->
+                    <div>
+                        <label class="block text-sm font-bold text-gray-700 mb-2">
+                            <i class="fa-solid fa-book-open text-blue-800 mr-1"></i> Subjek Diajar (Boleh tandakan lebih daripada satu)
+                        </label>
+                        <div class="grid grid-cols-2 md:grid-cols-3 gap-3 bg-gray-50 p-4 rounded-xl border border-gray-200">
+                            <label class="flex items-center space-x-2 text-sm text-gray-700 cursor-pointer hover:text-blue-800">
+                                <input type="checkbox" name="subjectCheck" value="Bahasa Melayu" class="w-4 h-4 text-blue-800 rounded focus:ring-blue-500">
+                                <span>Bahasa Melayu</span>
+                            </label>
+                            <label class="flex items-center space-x-2 text-sm text-gray-700 cursor-pointer hover:text-blue-800">
+                                <input type="checkbox" name="subjectCheck" value="English" class="w-4 h-4 text-blue-800 rounded focus:ring-blue-500">
+                                <span>English</span>
+                            </label>
+                            <label class="flex items-center space-x-2 text-sm text-gray-700 cursor-pointer hover:text-blue-800">
+                                <input type="checkbox" name="subjectCheck" value="Matematik" class="w-4 h-4 text-blue-800 rounded focus:ring-blue-500">
+                                <span>Matematik</span>
+                            </label>
+                            <label class="flex items-center space-x-2 text-sm text-gray-700 cursor-pointer hover:text-blue-800">
+                                <input type="checkbox" name="subjectCheck" value="Sains" class="w-4 h-4 text-blue-800 rounded focus:ring-blue-500">
+                                <span>Sains</span>
+                            </label>
+                            <label class="flex items-center space-x-2 text-sm text-gray-700 cursor-pointer hover:text-blue-800">
+                                <input type="checkbox" name="subjectCheck" value="RBT" class="w-4 h-4 text-blue-800 rounded focus:ring-blue-500">
+                                <span>RBT</span>
+                            </label>
+                            <label class="flex items-center space-x-2 text-sm text-gray-700 cursor-pointer hover:text-blue-800">
+                                <input type="checkbox" name="subjectCheck" value="Sejarah" class="w-4 h-4 text-blue-800 rounded focus:ring-blue-500">
+                                <span>Sejarah</span>
+                            </label>
+                            <label class="flex items-center space-x-2 text-sm text-gray-700 cursor-pointer hover:text-blue-800">
+                                <input type="checkbox" name="subjectCheck" value="Pendidikan Islam" class="w-4 h-4 text-blue-800 rounded focus:ring-blue-500">
+                                <span>Pendidikan Islam</span>
+                            </label>
+                            <label class="flex items-center space-x-2 text-sm text-gray-700 cursor-pointer hover:text-blue-800">
+                                <input type="checkbox" name="subjectCheck" value="Pendidikan Moral" class="w-4 h-4 text-blue-800 rounded focus:ring-blue-500">
+                                <span>Pendidikan Moral</span>
+                            </label>
+                            <label class="flex items-center space-x-2 text-sm text-gray-700 cursor-pointer hover:text-blue-800">
+                                <input type="checkbox" name="subjectCheck" value="PSV" class="w-4 h-4 text-blue-800 rounded focus:ring-blue-500">
+                                <span>PSV</span>
+                            </label>
+                            <label class="flex items-center space-x-2 text-sm text-gray-700 cursor-pointer hover:text-blue-800">
+                                <input type="checkbox" name="subjectCheck" value="PJK" class="w-4 h-4 text-blue-800 rounded focus:ring-blue-500">
+                                <span>PJK</span>
+                            </label>
+                            <label class="flex items-center space-x-2 text-sm text-gray-700 cursor-pointer hover:text-blue-800">
+                                <input type="checkbox" name="subjectCheck" value="Muzik" class="w-4 h-4 text-blue-800 rounded focus:ring-blue-500">
+                                <span>Muzik</span>
+                            </label>
+                            <label class="flex items-center space-x-2 text-sm text-gray-700 cursor-pointer hover:text-blue-800">
+                                <input type="checkbox" name="subjectCheck" value="Prasekolah" class="w-4 h-4 text-blue-800 rounded focus:ring-blue-500">
+                                <span>Prasekolah</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- 3. PILIHAN KELAS / TAHUN (CHECKBOXES BERBILANG) -->
+                    <div>
+                        <label class="block text-sm font-bold text-gray-700 mb-2">
+                            <i class="fa-solid fa-school text-blue-800 mr-1"></i> Kelas / Tahun (Boleh tandakan lebih daripada satu)
+                        </label>
+                        <div class="grid grid-cols-2 md:grid-cols-3 gap-3 bg-gray-50 p-4 rounded-xl border border-gray-200">
+                            <label class="flex items-center space-x-2 text-sm text-gray-700 cursor-pointer hover:text-blue-800">
+                                <input type="checkbox" name="classCheck" value="Prasekolah" class="w-4 h-4 text-blue-800 rounded focus:ring-blue-500">
+                                <span>Prasekolah</span>
+                            </label>
+                            <label class="flex items-center space-x-2 text-sm text-gray-700 cursor-pointer hover:text-blue-800">
+                                <input type="checkbox" name="classCheck" value="Pemulihan" class="w-4 h-4 text-blue-800 rounded focus:ring-blue-500">
+                                <span>Pemulihan</span>
+                            </label>
+                            <label class="flex items-center space-x-2 text-sm text-gray-700 cursor-pointer hover:text-blue-800">
+                                <input type="checkbox" name="classCheck" value="Tahun 1" class="w-4 h-4 text-blue-800 rounded focus:ring-blue-500">
+                                <span>Tahun 1</span>
+                            </label>
+                            <label class="flex items-center space-x-2 text-sm text-gray-700 cursor-pointer hover:text-blue-800">
+                                <input type="checkbox" name="classCheck" value="Tahun 2" class="w-4 h-4 text-blue-800 rounded focus:ring-blue-500">
+                                <span>Tahun 2</span>
+                            </label>
+                            <label class="flex items-center space-x-2 text-sm text-gray-700 cursor-pointer hover:text-blue-800">
+                                <input type="checkbox" name="classCheck" value="Tahun 3" class="w-4 h-4 text-blue-800 rounded focus:ring-blue-500">
+                                <span>Tahun 3</span>
+                            </label>
+                            <label class="flex items-center space-x-2 text-sm text-gray-700 cursor-pointer hover:text-blue-800">
+                                <input type="checkbox" name="classCheck" value="Tahun 4" class="w-4 h-4 text-blue-800 rounded focus:ring-blue-500">
+                                <span>Tahun 4</span>
+                            </label>
+                            <label class="flex items-center space-x-2 text-sm text-gray-700 cursor-pointer hover:text-blue-800">
+                                <input type="checkbox" name="classCheck" value="Tahun 5" class="w-4 h-4 text-blue-800 rounded focus:ring-blue-500">
+                                <span>Tahun 5</span>
+                            </label>
+                            <label class="flex items-center space-x-2 text-sm text-gray-700 cursor-pointer hover:text-blue-800">
+                                <input type="checkbox" name="classCheck" value="Tahun 6" class="w-4 h-4 text-blue-800 rounded focus:ring-blue-500">
+                                <span>Tahun 6</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- MUAT NAIK BERBILANG FAIL -->
+                    <div id="fileUploadContainer" class="p-5 rounded-xl border-2 border-dashed transition-all">
+                        <label class="block text-sm font-bold text-gray-800 mb-2"><i class="fa-solid fa-paperclip text-blue-800 mr-1"></i> Lampirkan Fail RPH (Boleh pilih lebih daripada 1 fail)</label>
+                        <input type="file" id="fileInput" multiple class="w-full text-sm text-gray-600 file:mr-4 file:py-2.5 file:px-4 file:rounded-xl file:border-0 file:text-sm file:font-bold file:bg-blue-800 file:text-white hover:file:bg-blue-900 cursor-pointer">
+                        <p class="text-xs text-gray-500 mt-2"><i class="fa-solid fa-circle-info mr-1"></i> Tekan 'Ctrl' atau 'Shift' di keyboard untuk memilih beberapa fail RPH serentak.</p>
+                    </div>
+
+                    <!-- BANNER AMARAN ISNIN / LEWAT -->
+                    <div id="lateWarningBanner" class="hidden p-4 bg-red-100 border-l-4 border-red-600 rounded-lg text-red-800 text-sm font-semibold">
+                        <i class="fa-solid fa-triangle-exclamation text-red-600 mr-2 text-lg"></i>
+                        <span>AMARAN: Hari penghantaran RPH telah melepasi tarikh akhir (Hari Isnin). Status penghantaran ini akan direkodkan sebagai <b class="underline">LEWAT</b>.</span>
+                    </div>
+
+                    <button type="submit" id="submitBtn" class="w-full bg-blue-800 hover:bg-blue-900 text-white font-bold py-3.5 px-4 rounded-xl transition duration-200 shadow-lg text-lg flex items-center justify-center">
+                        <i class="fa-solid fa-paper-plane mr-2"></i> Hantar RPH Sekarang
+                    </button>
+                </form>
             </div>
 
-            <form id="erphForm" class="space-y-6">
-                
-                <!-- 1. NAMA GURU & MINGGU -->
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <!-- RUANGAN SEMAKAN STATUS & ULASAN GURU -->
+            <div class="bg-white shadow-xl rounded-2xl p-6 md:p-8 border border-gray-200">
+                <div class="border-b pb-4 mb-6 flex flex-col md:flex-row justify-between md:items-center gap-4">
                     <div>
-                        <label class="block text-sm font-bold text-gray-700 mb-2"><i class="fa-solid fa-user text-blue-800 mr-1"></i> Nama Guru</label>
-                        <select id="teacherName" required class="w-full px-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-blue-600 focus:outline-none bg-white font-medium">
-                            <option value="">-- Pilih Nama Guru --</option>
+                        <h2 class="text-2xl font-bold text-gray-800"><i class="fa-solid fa-clipboard-check text-blue-800 mr-2"></i>Semak Status & Ulasan Headmaster</h2>
+                        <p class="text-sm text-gray-500">Pilih nama anda untuk melihat status kelulusan dan ulasan RPH dari Headmaster</p>
+                    </div>
+                    <div class="flex items-center space-x-2">
+                        <select id="filterTeacherSelect" class="px-4 py-2 border border-gray-300 rounded-xl text-sm font-semibold focus:ring-2 focus:ring-blue-600 focus:outline-none">
+                            <option value="">-- Pilih Nama Anda --</option>
                             <option value="YOLLANI JAFFERI">YOLLANI JAFFERI</option>
                             <option value="KEVINSON GANGGA ANAK GAPU">KEVINSON GANGGA ANAK GAPU</option>
                             <option value="MUHAMMAD AIZEL BIN BOLHASAN">MUHAMMAD AIZEL BIN BOLHASAN</option>
@@ -56,145 +213,20 @@
                             <option value="EVA UDING PADAN">EVA UDING PADAN</option>
                             <option value="PATRICK ANN BILONG">PATRICK ANN BILONG</option>
                             <option value="CLARISSA ROLAND">CLARISSA ROLAND</option>
-                            <option value="NAZIERAH GANI">NAZIERAH GANI</option>
                             <option value="PATRICIA LUT">PATRICIA LUT</option>
-                            <option value="FLORENTINA MARIE AREN">FLORENTINA MARIE AREN</option>
                             <option value="ZIANA JANE STEPHEN">ZIANA JANE STEPHEN</option>
                             <option value="AGNES YAPP YI ZHEN">AGNES YAPP YI ZHEN</option>
                             <option value="WATSON KULIH ANAK BLALANG">WATSON KULIH ANAK BLALANG</option>
-                            <option value="ANGELICA">ANGELICA</option>
+                            <option value="TRACY RAYMOND">TRACY RAYMOND</option>
                         </select>
-                    </div>
-
-                    <!-- MINGGU RPH -->
-                    <div>
-                        <label class="block text-sm font-bold text-gray-700 mb-2"><i class="fa-solid fa-calendar-week text-blue-800 mr-1"></i> Minggu Persekolahan</label>
-                        <select id="week" required class="w-full px-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-blue-600 focus:outline-none bg-white font-medium">
-                            <option value="">-- Pilih Minggu --</option>
-                            <script>
-                                for(let i=1; i<=42; i++) {
-                                    document.write(`<option value="Minggu ${i}">Minggu ${i}</option>`);
-                                }
-                            </script>
-                        </select>
+                        <button onclick="loadTeacherSubmissions()" class="px-4 py-2 bg-blue-800 text-white font-bold rounded-xl text-sm hover:bg-blue-900 transition">Semak</button>
                     </div>
                 </div>
 
-                <!-- 2. PILIHAN SUBJEK (CHECKBOXES BERBILANG) -->
-                <div>
-                    <label class="block text-sm font-bold text-gray-700 mb-2">
-                        <i class="fa-solid fa-book-open text-blue-800 mr-1"></i> Subjek Diajar (Boleh tandakan lebih daripada satu)
-                    </label>
-                    <div class="grid grid-cols-2 md:grid-cols-3 gap-3 bg-gray-50 p-4 rounded-xl border border-gray-200">
-                        <label class="flex items-center space-x-2 text-sm text-gray-700 cursor-pointer hover:text-blue-800">
-                            <input type="checkbox" name="subjectCheck" value="Bahasa Melayu" class="w-4 h-4 text-blue-800 rounded focus:ring-blue-500">
-                            <span>Bahasa Melayu</span>
-                        </label>
-                        <label class="flex items-center space-x-2 text-sm text-gray-700 cursor-pointer hover:text-blue-800">
-                            <input type="checkbox" name="subjectCheck" value="English" class="w-4 h-4 text-blue-800 rounded focus:ring-blue-500">
-                            <span>English</span>
-                        </label>
-                        <label class="flex items-center space-x-2 text-sm text-gray-700 cursor-pointer hover:text-blue-800">
-                            <input type="checkbox" name="subjectCheck" value="Matematik" class="w-4 h-4 text-blue-800 rounded focus:ring-blue-500">
-                            <span>Matematik</span>
-                        </label>
-                        <label class="flex items-center space-x-2 text-sm text-gray-700 cursor-pointer hover:text-blue-800">
-                            <input type="checkbox" name="subjectCheck" value="Sains" class="w-4 h-4 text-blue-800 rounded focus:ring-blue-500">
-                            <span>Sains</span>
-                        </label>
-                        <label class="flex items-center space-x-2 text-sm text-gray-700 cursor-pointer hover:text-blue-800">
-                            <input type="checkbox" name="subjectCheck" value="RBT" class="w-4 h-4 text-blue-800 rounded focus:ring-blue-500">
-                            <span>RBT</span>
-                        </label>
-                        <label class="flex items-center space-x-2 text-sm text-gray-700 cursor-pointer hover:text-blue-800">
-                            <input type="checkbox" name="subjectCheck" value="Sejarah" class="w-4 h-4 text-blue-800 rounded focus:ring-blue-500">
-                            <span>Sejarah</span>
-                        </label>
-                        <label class="flex items-center space-x-2 text-sm text-gray-700 cursor-pointer hover:text-blue-800">
-                            <input type="checkbox" name="subjectCheck" value="Pendidikan Islam" class="w-4 h-4 text-blue-800 rounded focus:ring-blue-500">
-                            <span>Pendidikan Islam</span>
-                        </label>
-                        <label class="flex items-center space-x-2 text-sm text-gray-700 cursor-pointer hover:text-blue-800">
-                            <input type="checkbox" name="subjectCheck" value="Pendidikan Moral" class="w-4 h-4 text-blue-800 rounded focus:ring-blue-500">
-                            <span>Pendidikan Moral</span>
-                        </label>
-                        <label class="flex items-center space-x-2 text-sm text-gray-700 cursor-pointer hover:text-blue-800">
-                            <input type="checkbox" name="subjectCheck" value="PSV" class="w-4 h-4 text-blue-800 rounded focus:ring-blue-500">
-                            <span>PSV</span>
-                        </label>
-                        <label class="flex items-center space-x-2 text-sm text-gray-700 cursor-pointer hover:text-blue-800">
-                            <input type="checkbox" name="subjectCheck" value="PJK" class="w-4 h-4 text-blue-800 rounded focus:ring-blue-500">
-                            <span>PJK</span>
-                        </label>
-                        <label class="flex items-center space-x-2 text-sm text-gray-700 cursor-pointer hover:text-blue-800">
-                            <input type="checkbox" name="subjectCheck" value="Muzik" class="w-4 h-4 text-blue-800 rounded focus:ring-blue-500">
-                            <span>Muzik</span>
-                        </label>
-                        <label class="flex items-center space-x-2 text-sm text-gray-700 cursor-pointer hover:text-blue-800">
-                            <input type="checkbox" name="subjectCheck" value="Prasekolah" class="w-4 h-4 text-blue-800 rounded focus:ring-blue-500">
-                            <span>Prasekolah</span>
-                        </label>
-                    </div>
+                <div id="teacherResultArea" class="overflow-x-auto">
+                    <p class="text-gray-500 text-center py-6 italic">Sila pilih nama anda dan tekan butang <b>Semak</b> di atas untuk melihat maklum balas Headmaster.</p>
                 </div>
-
-                <!-- 3. PILIHAN KELAS / TAHUN (CHECKBOXES BERBILANG) -->
-                <div>
-                    <label class="block text-sm font-bold text-gray-700 mb-2">
-                        <i class="fa-solid fa-school text-blue-800 mr-1"></i> Kelas / Tahun (Boleh tandakan lebih daripada satu)
-                    </label>
-                    <div class="grid grid-cols-2 md:grid-cols-3 gap-3 bg-gray-50 p-4 rounded-xl border border-gray-200">
-                        <label class="flex items-center space-x-2 text-sm text-gray-700 cursor-pointer hover:text-blue-800">
-                            <input type="checkbox" name="classCheck" value="Prasekolah" class="w-4 h-4 text-blue-800 rounded focus:ring-blue-500">
-                            <span>Prasekolah</span>
-                        </label>
-                        <label class="flex items-center space-x-2 text-sm text-gray-700 cursor-pointer hover:text-blue-800">
-                            <input type="checkbox" name="classCheck" value="Pemulihan" class="w-4 h-4 text-blue-800 rounded focus:ring-blue-500">
-                            <span>Pemulihan</span>
-                        </label>
-                        <label class="flex items-center space-x-2 text-sm text-gray-700 cursor-pointer hover:text-blue-800">
-                            <input type="checkbox" name="classCheck" value="Tahun 1" class="w-4 h-4 text-blue-800 rounded focus:ring-blue-500">
-                            <span>Tahun 1</span>
-                        </label>
-                        <label class="flex items-center space-x-2 text-sm text-gray-700 cursor-pointer hover:text-blue-800">
-                            <input type="checkbox" name="classCheck" value="Tahun 2" class="w-4 h-4 text-blue-800 rounded focus:ring-blue-500">
-                            <span>Tahun 2</span>
-                        </label>
-                        <label class="flex items-center space-x-2 text-sm text-gray-700 cursor-pointer hover:text-blue-800">
-                            <input type="checkbox" name="classCheck" value="Tahun 3" class="w-4 h-4 text-blue-800 rounded focus:ring-blue-500">
-                            <span>Tahun 3</span>
-                        </label>
-                        <label class="flex items-center space-x-2 text-sm text-gray-700 cursor-pointer hover:text-blue-800">
-                            <input type="checkbox" name="classCheck" value="Tahun 4" class="w-4 h-4 text-blue-800 rounded focus:ring-blue-500">
-                            <span>Tahun 4</span>
-                        </label>
-                        <label class="flex items-center space-x-2 text-sm text-gray-700 cursor-pointer hover:text-blue-800">
-                            <input type="checkbox" name="classCheck" value="Tahun 5" class="w-4 h-4 text-blue-800 rounded focus:ring-blue-500">
-                            <span>Tahun 5</span>
-                        </label>
-                        <label class="flex items-center space-x-2 text-sm text-gray-700 cursor-pointer hover:text-blue-800">
-                            <input type="checkbox" name="classCheck" value="Tahun 6" class="w-4 h-4 text-blue-800 rounded focus:ring-blue-500">
-                            <span>Tahun 6</span>
-                        </label>
-                    </div>
-                </div>
-
-                <!-- MUAT NAIK BERBILANG FAIL -->
-                <div id="fileUploadContainer" class="p-5 rounded-xl border-2 border-dashed transition-all">
-                    <label class="block text-sm font-bold text-gray-800 mb-2"><i class="fa-solid fa-paperclip text-blue-800 mr-1"></i> Lampirkan Fail RPH (Boleh pilih lebih daripada 1 fail)</label>
-                    <input type="file" id="fileInput" multiple class="w-full text-sm text-gray-600 file:mr-4 file:py-2.5 file:px-4 file:rounded-xl file:border-0 file:text-sm file:font-bold file:bg-blue-800 file:text-white hover:file:bg-blue-900 cursor-pointer">
-                    <p class="text-xs text-gray-500 mt-2"><i class="fa-solid fa-circle-info mr-1"></i> Tekan 'Ctrl' atau 'Shift' di keyboard untuk memilih beberapa fail RPH serentak.</p>
-                </div>
-
-                <!-- BANNER AMARAN ISNIN / LEWAT -->
-                <div id="lateWarningBanner" class="hidden p-4 bg-red-100 border-l-4 border-red-600 rounded-lg text-red-800 text-sm font-semibold">
-                    <i class="fa-solid fa-triangle-exclamation text-red-600 mr-2 text-lg"></i>
-                    <span>AMARAN: Hari penghantaran RPH telah melepasi tarikh akhir (Hari Isnin). Status penghantaran ini akan direkodkan sebagai <b class="underline">LEWAT</b>.</span>
-                </div>
-
-                <button type="submit" id="submitBtn" class="w-full bg-blue-800 hover:bg-blue-900 text-white font-bold py-3.5 px-4 rounded-xl transition duration-200 shadow-lg text-lg flex items-center justify-center">
-                    <i class="fa-solid fa-paper-plane mr-2"></i> Hantar RPH Sekarang
-                </button>
-            </form>
+            </div>
         </div>
 
         <!-- PANEL HEADMASTER (GURU BESAR) -->
@@ -248,7 +280,6 @@
 
         document.getElementById('currentDateDisplay').innerText = new Date().toLocaleDateString('ms-MY', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
 
-        // SEMAKAN DEADLINE ISNIN
         function checkDeadline() {
             const now = new Date();
             const currentDay = now.getDay();
@@ -300,7 +331,6 @@
         document.getElementById('erphForm').addEventListener('submit', async function(e) {
             e.preventDefault();
 
-            // AMBIL SUBJEK TERPILIH
             const selectedSubjects = Array.from(document.querySelectorAll('input[name="subjectCheck"]:checked')).map(el => el.value);
             if (selectedSubjects.length === 0) {
                 alert("Sila pilih sekurang-kurangnya satu Subjek!");
@@ -308,7 +338,6 @@
             }
             const subjectString = selectedSubjects.join(', ');
 
-            // AMBIL KELAS TERPILIH
             const selectedClasses = Array.from(document.querySelectorAll('input[name="classCheck"]:checked')).map(el => el.value);
             if (selectedClasses.length === 0) {
                 alert("Sila pilih sekurang-kurangnya satu Kelas!");
@@ -389,6 +418,78 @@
             document.getElementById('successModal').classList.remove('flex');
         }
 
+        // FUNGSI UNTUK GURU SEMAK REKOD & ULASAN MEREKA
+        function loadTeacherSubmissions() {
+            const selectedTeacher = document.getElementById('filterTeacherSelect').value;
+            const targetDiv = document.getElementById('teacherResultArea');
+
+            if (!selectedTeacher) {
+                alert("Sila pilih nama anda terlebih dahulu!");
+                return;
+            }
+
+            targetDiv.innerHTML = '<p class="text-blue-800 font-bold animate-pulse text-center py-4"><i class="fa-solid fa-spinner fa-spin mr-2"></i> Memuat turun rekod anda...</p>';
+
+            fetch(scriptUrl)
+                .then(res => res.json())
+                .then(data => {
+                    const filtered = data.filter(item => item.teacherName === selectedTeacher);
+
+                    if (filtered.length === 0) {
+                        targetDiv.innerHTML = `<p class="text-gray-500 text-center py-4">Tiada rekod penghantaran ditemui untuk <b>${selectedTeacher}</b>.</p>`;
+                        return;
+                    }
+
+                    let html = `<table class="w-full text-left border-collapse min-w-[700px]">
+                        <thead>
+                            <tr class="bg-blue-50 text-blue-900 text-xs uppercase font-bold border-b border-blue-200">
+                                <th class="p-3">Minggu & Tarikh</th>
+                                <th class="p-3">Subjek & Kelas</th>
+                                <th class="p-3">Fail RPH</th>
+                                <th class="p-3">Status Masa</th>
+                                <th class="p-3">Kelulusan</th>
+                                <th class="p-3">Ulasan Headmaster</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y text-sm">`;
+
+                    filtered.reverse().forEach(item => {
+                        const lateTag = item.isLate 
+                            ? '<span class="px-2.5 py-1 bg-red-100 text-red-700 rounded-full text-xs font-black">LEWAT</span>'
+                            : '<span class="px-2.5 py-1 bg-emerald-100 text-emerald-700 rounded-full text-xs font-black">TEPAT MASA</span>';
+
+                        const appTag = item.approvalStatus === 'Approved'
+                            ? '<span class="text-emerald-600 font-bold"><i class="fa-solid fa-circle-check"></i> Diluluskan</span>'
+                            : item.approvalStatus === 'Rejected'
+                            ? '<span class="text-red-600 font-bold"><i class="fa-solid fa-circle-xmark"></i> Ditolak</span>'
+                            : '<span class="text-amber-600 font-bold"><i class="fa-solid fa-clock"></i> Belum Semak</span>';
+
+                        const fileBtn = item.fileUrl 
+                            ? `<a href="${item.fileUrl}" target="_blank" class="px-3 py-1 bg-blue-800 text-white rounded-lg text-xs font-bold hover:bg-blue-900 inline-flex items-center"><i class="fa-solid fa-file-pdf mr-1"></i> Buka Fail</a>`
+                            : `<span class="text-gray-400 text-xs">Tiada Fail</span>`;
+
+                        const commentText = item.comment 
+                            ? `<div class="bg-amber-50 p-2.5 rounded-lg border border-amber-200 text-xs text-amber-900 font-medium"><i class="fa-solid fa-comment-dots text-amber-600 mr-1"></i> "${item.comment}"</div>`
+                            : `<span class="text-gray-400 text-xs italic">Tiada ulasan</span>`;
+
+                        html += `<tr class="hover:bg-gray-50">
+                            <td class="p-3 text-xs"><b class="text-blue-800">${item.week}</b><br><span class="text-gray-500">${item.dateTimeStr || ''}</span></td>
+                            <td class="p-3 text-xs"><b>${item.subject}</b><br><span class="text-gray-600">${item.className}</span></td>
+                            <td class="p-3">${fileBtn}</td>
+                            <td class="p-3">${lateTag}</td>
+                            <td class="p-3 text-xs">${appTag}</td>
+                            <td class="p-3 max-w-xs">${commentText}</td>
+                        </tr>`;
+                    });
+
+                    html += '</tbody></table>';
+                    targetDiv.innerHTML = html;
+                })
+                .catch(err => {
+                    targetDiv.innerHTML = '<p class="text-red-500 py-4 text-center">Ralat memuat turun data.</p>';
+                });
+        }
+
         // MUAT TURUN DATA UNTUK PANEL HEADMASTER
         function loadHeadmasterData() {
             const headmasterContent = document.getElementById('headmasterContent');
@@ -463,7 +564,6 @@
                 });
         }
 
-        // FUNGSI UNTUK MENGEMASKINI STATUS BESERTA ULASAN
         function updateStatus(rowIndex, newStatus) {
             const commentInput = document.getElementById(`commentInput_${rowIndex}`);
             const commentVal = commentInput ? commentInput.value : '';
@@ -485,7 +585,6 @@
             });
         }
 
-        // FUNGSI UNTUK MENYIMPAN KOMEN SAHAJA
         function saveCommentOnly(rowIndex) {
             const commentInput = document.getElementById(`commentInput_${rowIndex}`);
             const commentVal = commentInput ? commentInput.value : '';
