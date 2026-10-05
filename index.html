@@ -57,6 +57,7 @@
                                 <option value="PATRICK ANN BILONG">PATRICK ANN BILONG</option>
                                 <option value="CLARISSA ROLAND">CLARISSA ROLAND</option>
                                 <option value="PATRICIA LUT">PATRICIA LUT</option>
+                                <option value="LESLIE VANDER ANAK BEYAR">LESLIE VANDER ANAK BEYAR</option>
                                 <option value="ZIANA JANE STEPHEN">ZIANA JANE STEPHEN</option>
                                 <option value="AGNES YAPP YI ZHEN">AGNES YAPP YI ZHEN</option>
                                 <option value="WATSON KULIH ANAK BLALANG">WATSON KULIH ANAK BLALANG</option>
@@ -135,7 +136,7 @@
                 </form>
             </div>
 
-            <!-- RUANGAN SEMAKAN STATUS & ULASAN GURU (DENGAN KAWALAN PIN GURU) -->
+            <!-- RUANGAN SEMAKAN STATUS & ULASAN GURU -->
             <div class="bg-white shadow-xl rounded-2xl p-6 md:p-8 border border-gray-200">
                 <div class="border-b pb-4 mb-6 flex flex-col md:flex-row justify-between md:items-center gap-4">
                     <div>
@@ -153,6 +154,7 @@
                             <option value="PATRICK ANN BILONG">PATRICK ANN BILONG</option>
                             <option value="CLARISSA ROLAND">CLARISSA ROLAND</option>
                             <option value="PATRICIA LUT">PATRICIA LUT</option>
+                            <option value="LESLIE VANDER ANAK BEYAR">LESLIE VANDER ANAK BEYAR</option>
                             <option value="ZIANA JANE STEPHEN">ZIANA JANE STEPHEN</option>
                             <option value="AGNES YAPP YI ZHEN">AGNES YAPP YI ZHEN</option>
                             <option value="WATSON KULIH ANAK BLALANG">WATSON KULIH ANAK BLALANG</option>
@@ -186,7 +188,7 @@
         </div>
     </div>
 
-    <!-- MODAL POPUP TICK HIJAU -->
+    <!-- MODAL POPUP TICK HIJAU (BERJAYA HANTAR) -->
     <div id="successModal" class="fixed inset-0 bg-black/60 backdrop-blur-sm hidden items-center justify-center p-4 z-50">
         <div class="bg-white rounded-3xl p-8 max-w-md w-full text-center shadow-2xl transform transition-all border-4 border-emerald-500">
             <div class="w-20 h-20 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto mb-4 text-4xl shadow-inner">
@@ -208,6 +210,32 @@
 
             <button onclick="closeModal()" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3 rounded-xl shadow-lg">
                 Tutup & Selesai
+            </button>
+        </div>
+    </div>
+
+    <!-- MODAL POPUP KOMEN & ULASAN HEADMASTER -->
+    <div id="commentModal" class="fixed inset-0 bg-black/60 backdrop-blur-sm hidden items-center justify-center p-4 z-50">
+        <div class="bg-white rounded-3xl p-6 md:p-8 max-w-lg w-full shadow-2xl border-2 border-amber-400 relative animate-fade-in">
+            <button onclick="closeCommentModal()" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600 w-8 h-8 flex items-center justify-center rounded-full bg-gray-100 hover:bg-gray-200 text-lg transition">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <div class="flex items-center space-x-3 mb-4">
+                <div class="w-12 h-12 bg-amber-100 text-amber-700 rounded-2xl flex items-center justify-center text-xl shrink-0">
+                    <i class="fa-solid fa-comment-dots"></i>
+                </div>
+                <div>
+                    <h3 class="text-xl font-bold text-gray-800">Ulasan Headmaster</h3>
+                    <p id="commentModalSubtitle" class="text-xs text-gray-500 font-semibold"></p>
+                </div>
+            </div>
+
+            <div class="bg-amber-50/80 border border-amber-200 rounded-2xl p-5 mb-6 text-sm text-gray-800 leading-relaxed font-medium whitespace-pre-wrap shadow-inner min-h-[120px] max-h-[300px] overflow-y-auto" id="commentModalBody">
+                <!-- Kandungan ulasan dimasukkan secara dinamik -->
+            </div>
+
+            <button onclick="closeCommentModal()" class="w-full bg-amber-500 hover:bg-amber-600 text-white font-bold py-3 rounded-xl shadow-md transition">
+                Tutup Ulasan
             </button>
         </div>
     </div>
@@ -355,7 +383,25 @@
             document.getElementById('successModal').classList.remove('flex');
         }
 
-        // SEMAKAN GURU (MEMERLUKAN PIN GURU INDIVIDU)
+        // FUNGSI MEMBUKA & MENUTUP MODAL ULASAN POP-UP
+        function openCommentModal(teacherName, week, commentText) {
+            document.getElementById('commentModalSubtitle').innerText = `${teacherName} • ${week}`;
+            document.getElementById('commentModalBody').innerText = commentText || 'Tiada ulasan diberikan.';
+            document.getElementById('commentModal').classList.remove('hidden');
+            document.getElementById('commentModal').classList.add('flex');
+        }
+
+        function closeCommentModal() {
+            document.getElementById('commentModal').classList.add('hidden');
+            document.getElementById('commentModal').classList.remove('flex');
+        }
+
+        function escapeJs(str) {
+            if (!str) return '';
+            return str.replace(/\\/g, '\\\\').replace(/'/g, "\\'").replace(/"/g, '&quot;').replace(/\n/g, '\\n').replace(/\r/g, '');
+        }
+
+        // SEMAKAN GURU (DENGAN PIN PERIBADI & POP-UP KOMEN)
         function loadTeacherSubmissions() {
             const selectedTeacher = document.getElementById('filterTeacherSelect').value;
             const targetDiv = document.getElementById('teacherResultArea');
@@ -393,7 +439,7 @@
                                 <th class="p-3">Fail RPH</th>
                                 <th class="p-3">Status Masa</th>
                                 <th class="p-3">Kelulusan</th>
-                                <th class="p-3">Ulasan Headmaster</th>
+                                <th class="p-3 text-center">Ulasan Headmaster</th>
                             </tr>
                         </thead>
                         <tbody class="divide-y text-sm">`;
@@ -413,8 +459,11 @@
                             ? `<a href="${item.fileUrl}" target="_blank" class="px-3 py-1 bg-blue-800 text-white rounded-lg text-xs font-bold hover:bg-blue-900 inline-flex items-center"><i class="fa-solid fa-file-pdf mr-1"></i> Buka Fail</a>`
                             : `<span class="text-gray-400 text-xs">Tiada Fail</span>`;
 
-                        const commentText = item.comment 
-                            ? `<div class="bg-amber-50 p-2.5 rounded-lg border border-amber-200 text-xs text-amber-900 font-medium"><i class="fa-solid fa-comment-dots text-amber-600 mr-1"></i> "${item.comment}"</div>`
+                        // BUTANG POP-UP KOMEN
+                        const commentBtn = item.comment 
+                            ? `<button onclick="openCommentModal('${escapeJs(item.teacherName)}', '${escapeJs(item.week)}', '${escapeJs(item.comment)}')" class="px-3 py-1.5 bg-amber-100 hover:bg-amber-200 text-amber-900 border border-amber-300 rounded-xl text-xs font-bold transition inline-flex items-center gap-1.5 shadow-sm">
+                                <i class="fa-solid fa-envelope-open-text text-amber-600 text-sm"></i> Baca Ulasan
+                               </button>`
                             : `<span class="text-gray-400 text-xs italic">Tiada ulasan</span>`;
 
                         html += `<tr class="hover:bg-gray-50">
@@ -423,7 +472,7 @@
                             <td class="p-3">${fileBtn}</td>
                             <td class="p-3">${lateTag}</td>
                             <td class="p-3 text-xs">${appTag}</td>
-                            <td class="p-3 max-w-xs">${commentText}</td>
+                            <td class="p-3 text-center">${commentBtn}</td>
                         </tr>`;
                     });
 
@@ -495,8 +544,8 @@
                             <td class="p-3">${fileBtn}</td>
                             <td class="p-3">${lateTag}</td>
                             <td class="p-3 text-xs">${appTag}</td>
-                            <td class="p-3 min-w-[200px]">
-                                <textarea id="commentInput_${item.rowIndex}" rows="2" placeholder="Tulis ulasan Guru Besar di sini..." class="w-full text-xs p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-600 focus:outline-none resize-none">${currentComment}</textarea>
+                            <td class="p-3 min-w-[220px]">
+                                <textarea id="commentInput_${item.rowIndex}" rows="3" placeholder="Tulis ulasan Guru Besar di sini..." class="w-full text-xs p-2.5 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-600 focus:outline-none resize-y">${currentComment}</textarea>
                                 <button onclick="saveCommentOnly(${item.rowIndex})" class="mt-1 px-2.5 py-1 bg-gray-700 hover:bg-gray-800 text-white rounded-md text-xs font-semibold transition flex items-center">
                                     <i class="fa-solid fa-comment-dots mr-1"></i> Simpan Ulasan
                                 </button>
@@ -508,7 +557,7 @@
                         </tr>`;
                     });
 
-                    html += '</tbody></table>';
+                    html += '</tbody>冲';
                     headmasterContent.innerHTML = html;
                 })
                 .catch(err => {
